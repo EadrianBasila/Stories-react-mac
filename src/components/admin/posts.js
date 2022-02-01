@@ -55,7 +55,7 @@ const Posts = (props) => {
 									<TableCell>Id</TableCell>
 									<TableCell align="left">Category</TableCell>
 									<TableCell align="left">Title</TableCell>
-									<TableCell align="left">Post Actions</TableCell>
+									<TableCell align="left">Action</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
