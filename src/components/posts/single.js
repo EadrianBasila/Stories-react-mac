@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../axios';
+import axiosInstance from '../../axios';
 import { useParams } from 'react-router-dom';
 //MaterialUI
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,8 +23,10 @@ export default function Post() {
 	const [data, setData] = useState({ posts: [] });
 
 	useEffect(() => {
-		axiosInstance.get(slug).then((res) => {
-			setData({ posts: res.data });
+		axiosInstance.get('post/' + slug).then((res) => {
+			setData({
+				posts: res.data,
+			});
 			console.log(res.data);
 		});
 	}, [setData]);
