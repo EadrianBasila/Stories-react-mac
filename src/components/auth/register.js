@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink} from 'react-router-dom';
 
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -134,9 +135,11 @@ export default function SignUp() {
 					>
 						Sign Up
 					</Button>
-					<Grid container justify="flex-end">
+					<Grid container justify="center">
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link href="#" variant="body2" 
+							component={NavLink}
+								to="/login">
 								Already have an account? Sign in
 							</Link>
 						</Grid>

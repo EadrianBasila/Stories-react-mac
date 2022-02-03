@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		height: '300px',
+		
 		paddingTop: '56.25%', // 16:9
 	},
 	link: {
@@ -72,7 +73,7 @@ const Search = () => {
 									>
 										<CardMedia
 											className={classes.cardMedia}
-											image="https://source.unsplash.com/random"
+											image={post.image}
 											title="Image title"
 										/>
 									</Link>
@@ -83,7 +84,7 @@ const Search = () => {
 											component="h2"
 											className={classes.postTitle}
 										>
-											{post.title.substr(0, 50)}...
+											{post.title.substr(0, 20)}...
 										</Typography>
 										<div className={classes.postText}>
 											<Typography color="textSecondary">

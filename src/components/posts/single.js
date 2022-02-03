@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
+import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+		//style={{ backgroundImage: `url(${data.posts.image})` }},
 	},
 }));
 
@@ -32,11 +35,15 @@ export default function Post() {
 	}, [setData]);
 
 	return (
-		<Container component="main" maxWidth="md">
+		
+		<Container component="main" maxWidth="md" >
 			<CssBaseline />
-			<div className={classes.paper}></div>
-			<div className={classes.heroContent}>
-				<Container maxWidth="sm">
+			<div className={classes.paper} >
+				<Container maxWidth="md">
+					<div>
+						<img src={data.posts.image} height="100px" width="md"/>
+					</div>
+
 					<Typography
 						component="h1"
 						variant="h2"
@@ -48,12 +55,21 @@ export default function Post() {
 					</Typography>
 					<Typography
 						component="h1"
-						variant="h5"
+						variant="h6"
 						align="center"
 						color="textPrimary"
 						gutterBottom
 					>
-						{data.posts.eventdate}
+						<CalendarTodayRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Date: {data.posts.eventdate} 
+					</Typography>
+					<Typography
+						component="h1"
+						variant="h6"
+						align="center"
+						color="textPrimary"
+						gutterBottom
+					>
+						<PeopleRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> People Attending: {data.posts.eventresponse}
 					</Typography>
 					<Typography
 						variant="h5"
@@ -63,6 +79,15 @@ export default function Post() {
 					>
 						{data.posts.excerpt}
 					</Typography>
+					<Typography
+						variant="h4"
+						align="center"
+						color="textSecondary"
+						paragraph
+					>
+						{data.posts.content}
+					</Typography>
+					
 				</Container>
 			</div>
 		</Container>

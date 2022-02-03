@@ -49,7 +49,7 @@ const Posts = (props) => {
 						return (
 							// Enterprise card is full width at sm breakpoint
 							<Grid item key={post.id} xs={12} md={4}>
-								<Card className={classes.card}>
+								<Card className={classes.card} style={{'borderRadius': '25px'}}>
 									<Link
 										color="textPrimary"
 										href={'post/' + post.slug}
