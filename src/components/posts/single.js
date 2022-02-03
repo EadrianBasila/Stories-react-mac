@@ -21,7 +21,7 @@ export default function Post() {
 	const classes = useStyles();
 
 	const [data, setData] = useState({ posts: [] });
-
+	
 	useEffect(() => {
 		axiosInstance.get('post/' + slug).then((res) => {
 			setData({
@@ -42,9 +42,18 @@ export default function Post() {
 						variant="h2"
 						align="center"
 						color="textPrimary"
-						gutterBottom
+						
 					>
 						{data.posts.title}
+					</Typography>
+					<Typography
+						component="h1"
+						variant="h5"
+						align="center"
+						color="textPrimary"
+						gutterBottom
+					>
+						{data.posts.eventdate}
 					</Typography>
 					<Typography
 						variant="h5"

@@ -121,9 +121,9 @@ export default function Create() {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}></Avatar>
-				<Typography component="h1" variant="h5">
-					Create A New Story
+				
+				<Typography component="h1" variant="h4">
+					Let's create a new story!
 				</Typography>
 				<form className={classes.form} noValidate>
 					<Grid container spacing={2}>
@@ -180,20 +180,16 @@ export default function Create() {
 								rows={4}
 							/>
 						</Grid>
-                        <Grid item xs={12}>
-							
+                        <Grid item xs={12}>							
                             <TextField
 								variant="outlined"
 								required
 								fullWidth
                                 type="datetime-local"
-								id="eventdate"
-								
+								id="eventdate"			
 								name="eventdate"
-								autoComplete="eventdate"
-                                
-								onChange={handleChange}
-                                
+								autoComplete="eventdate"                  
+								onChange={handleChange}                                
 							/>
 						</Grid>
                        <label htmlFor="post-image">

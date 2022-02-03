@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
+		height: '300px',
 		paddingTop: '56.25%', // 16:9
 	},
 	link: {
@@ -57,6 +58,7 @@ const Search = () => {
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
+			<h1 align='center'>Search Stories</h1>
 				<Grid container spacing={5} alignItems="flex-end">
 					{appState.posts.map((post) => {
 						return (

@@ -35,6 +35,7 @@ export default function Create() {
 		slug: '',
 		excerpt: '',
 		content: '',
+        eventdate: '',
 	});
 
 	const [formData, updateFormData] = useState(initialFormData);
@@ -47,6 +48,7 @@ export default function Create() {
 				['excerpt']: res.data.excerpt,
 				['slug']: res.data.slug,
 				['content']: res.data.content,
+                ['eventdate']: res.data.eventdate,
 			});
 			console.log(res.data);
 		});
@@ -70,6 +72,7 @@ export default function Create() {
 			author: 1,
 			excerpt: formData.excerpt,
 			content: formData.content,
+            eventdate: formData.eventdate,
 		});
 		history.push({
 			pathname: '/admin/',
@@ -142,6 +145,19 @@ export default function Create() {
 								onChange={handleChange}
 								multiline
 								rows={8}
+							/>
+						</Grid>
+                        <Grid item xs={12}>							
+                            <TextField
+								variant="outlined"
+								required
+								fullWidth
+                                type="datetime-local"
+								id="eventdate"			
+								name="eventdate"
+								autoComplete="eventdate" 
+                                value={formData.eventdate}               
+								onChange={handleChange}                                
 							/>
 						</Grid>
 					</Grid>

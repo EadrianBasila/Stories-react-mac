@@ -11,11 +11,13 @@ import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		paddingTop: '56.25%', // 16:9
+		height: '300px',
 	},
 	link: {
 		margin: theme.spacing(1, 1.5),
 	},
 	cardHeader: {
+
 		backgroundColor:
 			theme.palette.type === 'light'
 				? theme.palette.grey[200]
@@ -66,7 +68,7 @@ const Posts = (props) => {
 											component="h2"
 											className={classes.postTitle}
 										>
-											{post.title.substr(0, 50)}...
+											{post.title.substr(0, 20)}...
 										</Typography>
 										<div className={classes.postText}>
 											<Typography color="textSecondary">
