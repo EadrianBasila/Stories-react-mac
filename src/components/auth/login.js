@@ -61,6 +61,7 @@ export default function SignIn() {
 				password: formData.password,
 			})
 			.then((res) => {
+				console.log('login info: ',res.data);
 				localStorage.setItem('access_token', res.data.access);
 				localStorage.setItem('refresh_token', res.data.refresh);
 				axiosInstance.defaults.headers['Authorization'] =

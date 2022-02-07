@@ -15,6 +15,10 @@ import Admin from './Admin';
 import Create from './components/admin/create';
 import Edit from './components/admin/edit';
 import Delete from './components/admin/delete';
+import User from './User';
+import UserCreate from './components/user/create';
+import UserEdit from './components/user/edit';
+import UserDelete from './components/user/delete';
 
 const routing = (
 	<Router>
@@ -22,13 +26,21 @@ const routing = (
 			<Header />
 			<Switch>
 				<Route exact path="/" component={App} />
+				{/* For Admin */}
 				<Route exact path="/admin" component={Admin} />
 				<Route exact path="/admin/create" component={Create} />
 				<Route exact path="/admin/edit/:id" component={Edit} />
 				<Route exact path="/admin/delete/:id" component={Delete} />
+				{/* For User */}
+				<Route exact path="/user" component={User} />
+				<Route exact path="/user/create" component={UserCreate} />
+				<Route exact path="/user/edit/:id" component={UserEdit} />
+				<Route exact path="/user/delete/:id" component={UserDelete} />
+				{/* For Authentication */}
 				<Route path="/register" component={Register} />
 				<Route path="/login" component={Login} />
 				<Route path="/logout" component={Logout} />
+				{/* For Search */}
 				<Route path="/post/:slug" component={Single} />
 				<Route path="/search" component={Search} />
 			</Switch>

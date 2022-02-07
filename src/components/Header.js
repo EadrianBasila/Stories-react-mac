@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import ViewDayRoundedIcon from '@material-ui/icons/ViewDayRounded';
+import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -70,8 +71,8 @@ function Header() {
 						<IconButton 
 							color="inherit"
 							component={NavLink}
-							to="/admin/create">
-							<ViewDayRoundedIcon style={{'fontSize': '40px'}}/>
+							to="/user/create">
+							<ViewDayRoundedIcon style={{'fontSize': '30px'}}/>
 						</IconButton>
 																
 						<Typography
@@ -97,7 +98,14 @@ function Header() {
 							onRequestSearch={() => goSearch(data.search)}
 							style={{'borderRadius': '20px'}}
 						/>
-					
+
+						<IconButton
+							color="inherit"
+							component={NavLink}
+							to="#">
+							<NotificationsRoundedIcon style={{'fontSize': '30px'}}/>
+						</IconButton>
+
 						{auth &&( <div>
 							<IconButton
 								size="large"
@@ -107,7 +115,7 @@ function Header() {
 								onClick={handleMenu}
 								color="inherit"
 							>
-								<AccountCircle style={{'fontSize': '40px'}}/>
+								<AccountCircle style={{'fontSize': '30px'}}/>
 							</IconButton>
 							<Menu
 								id="account-appbar"
