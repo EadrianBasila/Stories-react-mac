@@ -60,7 +60,7 @@ axiosInstance.interceptors.response.use(
 						.then((response) => {
 							localStorage.setItem('access_token', response.data.access);
 							localStorage.setItem('refresh_token', response.data.refresh);
-							
+
 							axiosInstance.defaults.headers['Authorization'] =
 								'JWT ' + response.data.access;
 							originalRequest.headers['Authorization'] =
@@ -78,7 +78,8 @@ axiosInstance.interceptors.response.use(
 				}
 			} else {
 				console.log('Refresh token not available.');
-				alert('Refresh token not available.');
+				alert('Refresh token not available. PLease sign-out and sign-in again.');
+				window.location.href = '/logout/'; //remove if not working
 				window.location.href = '/login/';
 			}
 		}

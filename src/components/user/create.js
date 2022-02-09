@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
-
+import jwt_decode from 'jwt-decode';
 
 //MaterialUI
 import Button from '@material-ui/core/Button';
@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
+
 export default function Create() {
 	function slugify(string) {
 		const a =
@@ -56,11 +58,94 @@ export default function Create() {
 			.replace(/-+$/, ''); // Trim - from end of text
 	}
 
+    // async function getToken() {
+    //     //console.log('***************************************************************');
+    //     const token = await localStorage.getItem('access_token');
+    //     //console.log('undecodedtoken: ',token); 
+    //     //console.log('Titiw');
+    //     const decoded = jwt_decode(token);
+    //     //console.log('***************************************************************');
+    //     //console.log('Decoded data from token', decoded);
+    //     const getID =  decoded["user_id"];
+    //     //console.log('***************************************************************');
+    //     let userID = JSON.stringify(getID);
+    //     console.log('User ID from token', userID);
+    //     console.log(typeof userID);
+    //     return userID;
+    // }
 
+    // async function getUserID() {
+    //     const userID = await getToken().then(function (result) {           
+    //         console.log('User ID from getUserID', result);
+    //         return result;
+    //       })
+    //       .catch(function (error) {
+    //         return error;
+    //       })() 
+    //       console.log('User ID from getUserID', userID);
+    //     //return userID;
+     
+    // }
+
+    async function getUserID() {
+        try{
+            return await getToken().then(function (result) {           
+                console.log('User ID from getUserID', result);
+                return result;
+              })
+            }
+            catch(error){
+                return error;
+            }
+    }    
+
+
+    
+    
+    
+    
+
+
+
+
+    //  function parseID(decoded) {
+    //     const decodedtoken =  decoded["user_id"];
+    //     const userID = JSON.stringify(decodedtoken);
+    //     console.log('Parsing...')
+    //     console.log('Stringified user ID', userID);
+    //     return userID;
+       
+    //     //console.log('***************************************************************');
+        
+    // }
+
+    //  function getUserID(){
+    //     const token =  localStorage.getItem('access_token');
+    //     console.log('undecodedtoken: ',token); 
+    //     //console.log('Titiw');
+    //     const decoded =  jwt_decode(token);
+    //     const  userID = parseID(decoded);
+    //     console.log('User ID from token', userID);
+    //     return userID;
+        
+    // }
+
+    // async function fetchedID() {
+    //     let userID = await getUserID();
+    //     console.log('User ID from fetchedID', userID);
+    //     console.log(typeof userID);
+    //     return userID;
+    // }
+
+
+
+    //const userIDfromToken = getToken();
 	const history = useHistory();
+    
 	const initialFormData = Object.freeze({
 		title: '',
 		slug: '',
+        author: '',
 		excerpt: '',
 		content: '',
         eventdate: '',
@@ -92,10 +177,11 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+        
 		let formData = new FormData();
 		formData.append('title', postData.title);
 		formData.append('slug', postData.slug);
-		formData.append('author', 1);
+		formData.append('author', decodeToken());
 		formData.append('excerpt', postData.excerpt);
 		formData.append('content', postData.content);
         formData.append('eventdate', postData.eventdate.toString());
