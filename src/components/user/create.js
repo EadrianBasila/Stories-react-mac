@@ -117,18 +117,18 @@ export default function Create() {
     var authorID = 1;
 
     async function getToken() {
-        console.log('***************************************************************');
+        //console.log('***************************************************************');
         const token = await localStorage.getItem('access_token');
-        console.log('undecodedtoken: ',token); 
-        console.log('Titiw');
+        //console.log('undecodedtoken: ',token); 
+        //console.log('Titiw');
         const decoded = jwt_decode(token);
-        console.log('***************************************************************');
+        //console.log('***************************************************************');
         console.log('Decoded data from token', decoded);
         const getID =  decoded["user_id"];
-        console.log('***************************************************************');
+        //console.log('***************************************************************');
         let userID = JSON.stringify(getID);
-        console.log('User ID from token', userID);
-        console.log(typeof userID);
+        //console.log('User ID from token', userID);
+        //console.log(typeof userID);
         return userID;
     }
     
@@ -137,7 +137,7 @@ export default function Create() {
     console.log('Initial User ID is : ', authorID);
     const getID = async () => {
         const data = await getToken();
-        console.log(data);
+        //console.log(data);
         return data;
     }
 
@@ -147,7 +147,7 @@ export default function Create() {
         const dataID = parseInt(data);
         authorID = dataID;
         console.log('Final User ID is : ', authorID);
-        console.log(typeof authorID);
+        //console.log(typeof authorID);
         return authorID;    
     }).catch(error => {
         console.log('User ID fetch failed: ', error);

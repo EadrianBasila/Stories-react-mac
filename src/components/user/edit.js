@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory, useParams } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+
 //MaterialUI
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,6 +40,46 @@ export default function Create() {
         eventdate: '',
 	});
 
+    var authorID = 1;
+
+    async function getToken() {
+        //console.log('***************************************************************');
+        const token = await localStorage.getItem('access_token');
+        //console.log('undecodedtoken: ',token); 
+        //console.log('Titiw');
+        const decoded = jwt_decode(token);
+        //console.log('***************************************************************');
+        console.log('Decoded data from token', decoded);
+        const getID =  decoded["user_id"];
+        //console.log('***************************************************************');
+        let userID = JSON.stringify(getID);
+        //console.log('User ID from token', userID);
+        //console.log(typeof userID);
+        return userID;
+    }
+    
+    
+
+    console.log('Initial User ID is : ', authorID);
+    const getID = async () => {
+        const data = await getToken();
+        //console.log(data);
+        return data;
+    }
+
+    //working
+    
+    getID().then(data => {
+        const dataID = parseInt(data);
+        authorID = dataID;
+        console.log('Final User ID is : ', authorID);
+        //console.log(typeof authorID);
+        return authorID;    
+    }).catch(error => {
+        console.log('User ID fetch failed: ', error);
+    });
+
+
 	const [formData, updateFormData] = useState(initialFormData);
 
 	useEffect(() => {
@@ -69,7 +111,7 @@ export default function Create() {
 		axiosInstance.put(`user/edit/` + id + '/', {
 			title: formData.title,
 			slug: formData.slug,
-			author: 1,
+			author: authorID,
 			excerpt: formData.excerpt,
 			content: formData.content,
             eventdate: formData.eventdate,

@@ -72,14 +72,6 @@ export default function Post() {
 						<PeopleRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> People Attending: {data.posts.eventresponse}
 					</Typography>
 					<Typography
-						variant="h6"
-						align="center"
-						color="textSecondary"
-						paragraph
-					>
-						{'Event hosted by '+ data.posts.author}
-					</Typography>
-					<Typography
 						variant="h5"
 						align="center"
 						color="textSecondary"
