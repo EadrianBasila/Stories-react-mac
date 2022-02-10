@@ -58,21 +58,7 @@ export default function Create() {
 			.replace(/-+$/, ''); // Trim - from end of text
 	}
 
-    // async function getToken() {
-    //     //console.log('***************************************************************');
-    //     const token = await localStorage.getItem('access_token');
-    //     //console.log('undecodedtoken: ',token); 
-    //     //console.log('Titiw');
-    //     const decoded = jwt_decode(token);
-    //     //console.log('***************************************************************');
-    //     //console.log('Decoded data from token', decoded);
-    //     const getID =  decoded["user_id"];
-    //     //console.log('***************************************************************');
-    //     let userID = JSON.stringify(getID);
-    //     console.log('User ID from token', userID);
-    //     console.log(typeof userID);
-    //     return userID;
-    // }
+  
 
     // async function getUserID() {
     //     const userID = await getToken().then(function (result) {           
@@ -87,27 +73,19 @@ export default function Create() {
      
     // }
 
-    async function getUserID() {
-        try{
-            return await getToken().then(function (result) {           
-                console.log('User ID from getUserID', result);
-                return result;
-              })
-            }
-            catch(error){
-                return error;
-            }
-    }    
-
+    // async function getUserID() {
+    //     try{
+    //         return await getToken().then(function (result) {           
+    //             console.log('User ID from getUserID', result);
+    //             return result;
+    //           })
+    //         }
+    //         catch(error){
+    //             return error;
+    //         }
+    // }    
 
     
-    
-    
-    
-
-
-
-
     //  function parseID(decoded) {
     //     const decodedtoken =  decoded["user_id"];
     //     const userID = JSON.stringify(decodedtoken);
@@ -135,8 +113,45 @@ export default function Create() {
     //     console.log('User ID from fetchedID', userID);
     //     console.log(typeof userID);
     //     return userID;
-    // }
+    // } 
+    var authorID = 1;
 
+    async function getToken() {
+        console.log('***************************************************************');
+        const token = await localStorage.getItem('access_token');
+        console.log('undecodedtoken: ',token); 
+        console.log('Titiw');
+        const decoded = jwt_decode(token);
+        console.log('***************************************************************');
+        console.log('Decoded data from token', decoded);
+        const getID =  decoded["user_id"];
+        console.log('***************************************************************');
+        let userID = JSON.stringify(getID);
+        console.log('User ID from token', userID);
+        console.log(typeof userID);
+        return userID;
+    }
+    
+    
+
+    console.log('Initial User ID is : ', authorID);
+    const getID = async () => {
+        const data = await getToken();
+        console.log(data);
+        return data;
+    }
+
+    //working
+    
+    getID().then(data => {
+        const dataID = parseInt(data);
+        authorID = dataID;
+        console.log('Final User ID is : ', authorID);
+        console.log(typeof authorID);
+        return authorID;    
+    }).catch(error => {
+        console.log('User ID fetch failed: ', error);
+    });
 
 
     //const userIDfromToken = getToken();
@@ -181,7 +196,7 @@ export default function Create() {
 		let formData = new FormData();
 		formData.append('title', postData.title);
 		formData.append('slug', postData.slug);
-		formData.append('author', decodeToken());
+		formData.append('author', authorID);
 		formData.append('excerpt', postData.excerpt);
 		formData.append('content', postData.content);
         formData.append('eventdate', postData.eventdate.toString());
