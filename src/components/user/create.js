@@ -13,7 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-
+import Fab from '@material-ui/core/Fab';
+import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +33,12 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(3),
 	},
 	submit: {
+        alignSelf: 'center',
 		margin: theme.spacing(3, 0, 2),
 	},
+    extendedIcon: {
+		marginRight: theme.spacing(1),
+	  },
 }));
 
 
@@ -222,6 +227,7 @@ export default function Create() {
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField
+                            
 								variant="outlined"
 								required
 								fullWidth
@@ -291,7 +297,6 @@ export default function Create() {
                             </IconButton>
                         </label>
                         <input
-                            
 							accept="image/*"
 							className={classes.input}
 							id="post-image"
@@ -301,16 +306,21 @@ export default function Create() {
 						/>
                         
 					</Grid>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
+                    <Grid item xs={12} >
+                        <Fab
+                        type = "submit"
+						variant="extended"
+                        item xs={12}
+						size="large"
 						color="primary"
-						className={classes.submit}
-						onClick={handleSubmit}
-					>
-						 Post Story
-					</Button>
+						aria-label="add"
+                        onClick={handleSubmit}
+						>
+						<DirectionsWalkRounded className={classes.extendedIcon} />
+						Create Event
+					</Fab>
+                    </Grid>
+                    
 				</form>
 			</div>
 		</Container>

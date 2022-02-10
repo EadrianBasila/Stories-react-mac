@@ -8,6 +8,9 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
+import Fab from '@material-ui/core/Fab';
+import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -17,6 +20,19 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		//style={{ backgroundImage: `url(${data.posts.image})` }},
 	},
+	extendedIcon: {
+		marginRight: theme.spacing(1),
+	  },
+	textField: {
+		[`& fieldset`]: {
+		  borderRadius: 30,
+		},
+	},
+	joinContainer: {
+		justifyContent: 'center',
+    	marginLeft: 'auto',
+    	marginRight: 'auto',
+	}
 }));
 
 export default function Post() {
@@ -87,9 +103,28 @@ export default function Post() {
 					>
 						{data.posts.content}
 					</Typography>
-					
+
+					<TextField 
+						required
+						size ="medium"
+						className={classes.textField} 
+						id="respondeeEmail" 
+						label="Your Email" 
+						type="search" 
+						variant="outlined" />
+					<Fab
+						variant="extended"
+						size="large"
+						color="primary"
+						aria-label="add"
+						>
+						<DirectionsWalkRounded className={classes.extendedIcon} />
+						Join Event
+					</Fab>
+				
 				</Container>
-			</div>
+				
+			</div>			
 		</Container>
 	);
 }

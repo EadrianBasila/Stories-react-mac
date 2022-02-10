@@ -15,6 +15,7 @@ import ViewDayRoundedIcon from '@material-ui/icons/ViewDayRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded';
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -72,7 +73,7 @@ function Header() {
 							color="inherit"
 							component={NavLink}
 							to="/user/create">
-							<ViewDayRoundedIcon style={{'fontSize': '30px'}}/>
+							<AmpStoriesRoundedIcon style={{'fontSize': '30px'}}/>
 						</IconButton>
 																
 						<Typography
