@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useParams } from 'react-router-dom';
+import TomtomMaps from '../Maps/TomTomMapview';
 //MaterialUI
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
 import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -32,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'center',
     	marginLeft: 'auto',
     	marginRight: 'auto',
+	},
+	mapDiv: {
+		width: '100%',
+		height: '690px',
+		marginTop: '20px',
+		marginBottom: '20px',
+		position: 'fixed',
+
 	}
 }));
 
@@ -123,8 +133,9 @@ export default function Post() {
 					</Fab>
 				
 				</Container>
-				
-			</div>			
+				<TomtomMaps className={classes.mapDiv}/>	
+			</div>
+			 			
 		</Container>
 	);
 }
