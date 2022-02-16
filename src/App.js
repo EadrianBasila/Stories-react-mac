@@ -27,34 +27,16 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Box from '@material-ui/core/Box';
 import AlternateEmailRoundedIcon from '@material-ui/icons/AlternateEmailRounded';
 import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		//paddingTop: '56.25%', // 16:9
 		height: '500px',
 	},
-	link: {
-		margin: theme.spacing(1, 1.5),
-	},
-	cardHeader: {
 
-		backgroundColor:
-			theme.palette.type === 'light'
-				? theme.palette.grey[200]
-				: theme.palette.grey[700],
-	},
-	postTitle: {
-		fontSize: '16px',
-		textAlign: 'left',
-	},
-	postText: {
-		display: 'flex',
-		justifyContent: 'left',
-		alignItems: 'baseline',
-		fontSize: '10px',
-		textAlign: 'left',
-		marginBottom: theme.spacing(1),
-	},
+
+
 }));
 
 function App() {
@@ -129,27 +111,41 @@ function App() {
 							ref={mapElement}
 
 						/>
-					<CardContent className={classes.cardContent}>
-					<TextField
-							variant="outlined"
-							margin="normal"
-							name="longitude"
-							label="Longitude"
-							id="longitude"
-							value={longitude}
-							placeholder="Enter Longitude"
-							onChange={handleChangeLn}
-						/>
-					<TextField
-							variant="outlined"
-							margin="normal"
-							name="latitude"
-							label="Latitude"
-							id="latitude"
-							value={latitude}
-							placeholder="Enter Latitude"
-							onChange={handleChangeLt}
-						/>
+					<CardContent>					
+					<Grid
+						container
+						direction="row"
+						justifyContent="center"
+						alignItems="space-around"
+						>
+							<TextField
+								variant="outlined"
+								name="longitude"
+								label="Longitude"
+								id="longitude"
+								value={longitude}							
+								size="small"
+								placeholder="Enter Longitude"
+								onChange={handleChangeLn}
+							/>
+							<Divider orientation="vertical" variant="middle"flexItem />
+							<TextField
+								variant="outlined"
+
+								name="latitude"
+								label="Latitude"
+								id="latitude"
+								value={latitude}							
+								size="small"
+								placeholder="Enter Latitude"
+								onChange={handleChangeLt}
+							/>							
+					</Grid>
+
+					
+						
+
+				
 					</CardContent>
 					<CardActions>
 						
