@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useParams } from 'react-router-dom';
-import TomtomMaps from '../Maps/TomTomMapview';
+
 //MaterialUI
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -133,7 +133,7 @@ export default function Post() {
 					</Fab>
 				
 				</Container>
-				<TomtomMaps className={classes.mapDiv}/>	
+				
 			</div>
 			 			
 		</Container>
