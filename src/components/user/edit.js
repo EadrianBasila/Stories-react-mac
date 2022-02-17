@@ -190,18 +190,21 @@ export default function Create() {
 							/>
 						</Grid>
                         <Grid item xs={12}>							
-                            <TextField
-								variant="outlined"
-								required
-								fullWidth
-                                type="datetime-local"
-								id="eventdate"			
-								name="eventdate"
-								autoComplete="eventdate" 
-                                value={formData.eventdate}               
-								onChange={handleChange}                                
-							/>
-						</Grid>
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									type="datetime-local"
+									id="eventdate"			
+									name="eventdate"
+									inputProps={{
+										min: new Date().toISOString().slice(0, 16),
+									  }}
+									autoComplete="eventdate"
+									value={formData.eventdate}                  
+									onChange={handleChange}                                
+								/>
+							</Grid>
 					</Grid>
 					<Button
 						type="submit"

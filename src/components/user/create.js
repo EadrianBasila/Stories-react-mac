@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+//TomtomMaps
+import * as tt from '@tomtom-international/web-sdk-maps';
+import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 //MaterialUI
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+//Maps
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,11 +51,68 @@ const useStyles = makeStyles((theme) => ({
     extendedIcon: {
 		marginRight: theme.spacing(1),
 	  },
+	cardMedia: {
+		//paddingTop: '56.25%', // 16:9
+		height: '500px',
+	},
 }));
 
 
 
 export default function Create() {
+	//TomtomMaps
+
+	const mapElement = useRef();
+	const[map, setMap] = useState({});
+	const [longitude, setLongitude] = useState(121.01071);
+	const [latitude, setLatitude] = useState(14.59795);
+	const handleChangeLn = (e) => {
+		setLongitude(e.target.value);	
+	};
+	const handleChangeLt = (e) => {
+		setLatitude(e.target.value);	
+	};
+
+	useEffect(() => {
+
+		let map = tt.map({
+			key: 'IFtSE2MH4pH9NWEVuAYOADCyGo9FNSOC',
+			container: mapElement.current,
+			center: [ longitude, latitude ],
+			stylesVisibility: {
+				trafficIncidents: true,
+				trafficFlow: true,
+			},
+			
+			zoom: 17,
+		});
+
+		setMap(map);
+		const addMarker = () => {
+			const element = document.createElement('div');
+			element.className = 'marker';
+			const marker = new tt.Marker({
+				draggable: true,
+				element: element
+			})
+			.setLngLat([ longitude, latitude ])
+			.addTo(map)
+
+			marker.on('dragend', () => {
+				const lngLat = marker.getLngLat();
+				setLongitude(lngLat.lng);
+				setLatitude(lngLat.lat);
+			})
+		};
+		addMarker();
+
+
+		return () => map.remove();
+	}, [longitude, latitude]);
+
+
+
+	////////////////////////////////////////////////////////////////////////////
 	function slugify(string) {
 		const a =
 			'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
@@ -63,62 +132,6 @@ export default function Create() {
 			.replace(/-+$/, ''); // Trim - from end of text
 	}
 
-  
-
-    // async function getUserID() {
-    //     const userID = await getToken().then(function (result) {           
-    //         console.log('User ID from getUserID', result);
-    //         return result;
-    //       })
-    //       .catch(function (error) {
-    //         return error;
-    //       })() 
-    //       console.log('User ID from getUserID', userID);
-    //     //return userID;
-     
-    // }
-
-    // async function getUserID() {
-    //     try{
-    //         return await getToken().then(function (result) {           
-    //             console.log('User ID from getUserID', result);
-    //             return result;
-    //           })
-    //         }
-    //         catch(error){
-    //             return error;
-    //         }
-    // }    
-
-    
-    //  function parseID(decoded) {
-    //     const decodedtoken =  decoded["user_id"];
-    //     const userID = JSON.stringify(decodedtoken);
-    //     console.log('Parsing...')
-    //     console.log('Stringified user ID', userID);
-    //     return userID;
-       
-    //     //console.log('***************************************************************');
-        
-    // }
-
-    //  function getUserID(){
-    //     const token =  localStorage.getItem('access_token');
-    //     console.log('undecodedtoken: ',token); 
-    //     //console.log('Titiw');
-    //     const decoded =  jwt_decode(token);
-    //     const  userID = parseID(decoded);
-    //     console.log('User ID from token', userID);
-    //     return userID;
-        
-    // }
-
-    // async function fetchedID() {
-    //     let userID = await getUserID();
-    //     console.log('User ID from fetchedID', userID);
-    //     console.log(typeof userID);
-    //     return userID;
-    // } 
     var authorID = 1;
 
     async function getToken() {
@@ -137,8 +150,6 @@ export default function Create() {
         return userID;
     }
     
-    
-
     console.log('Initial User ID is : ', authorID);
     const getID = async () => {
         const data = await getToken();
@@ -169,6 +180,11 @@ export default function Create() {
 		excerpt: '',
 		content: '',
         eventdate: '',
+		postattendee: '',
+		eventoption: '',
+		eventaddress: '',
+		eventlon: '',
+		eventlat: '',
 	});
 
 	const [postData, updateFormData] = useState(initialFormData);
@@ -206,6 +222,11 @@ export default function Create() {
 		formData.append('content', postData.content);
         formData.append('eventdate', postData.eventdate.toString());
 		formData.append('image', postimage.image[0]);
+		formData.append('postattendee', postData.postattendee);
+		formData.append('eventoption', postData.eventoption);
+		formData.append('eventaddress', postData.eventaddress);
+		formData.append('eventlon', parseFloat(longitude));
+		formData.append('eventlat', parseFloat(latitude));
 		axiosInstance.post(`user/create/`, formData);
 		history.push({
 			pathname: '/user/',
@@ -216,113 +237,209 @@ export default function Create() {
 	const classes = useStyles();
 
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
+		<>
+			{map &&
+			<Container component="main" maxWidth="md">
+				<CssBaseline />
 				
-				<Typography component="h1" variant="h4">
-					Let's create a new story!
-				</Typography>
-				<form className={classes.form} noValidate>
-					<Grid container spacing={2}>
-						<Grid item xs={12}>
-							<TextField
-                            
-								variant="outlined"
-								required
-								fullWidth
-								id="title"
-								label="Post Title"
-								name="title"
-								autoComplete="title"
+				<div className={classes.paper}>
+					
+					<Typography component="h1" variant="h4">
+						Let's create a new story!
+					</Typography>
+					<form className={classes.form} noValidate>
+						<Grid container spacing={2}>
+							<Grid item xs={12}>
+								<TextField
+								
+									variant="outlined"
+									required
+									fullWidth
+									id="title"
+									label="Post Title"
+									name="title"
+									autoComplete="title"
+									onChange={handleChange}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									id="excerpt"
+									label="Post Excerpt"
+									name="excerpt"
+									autoComplete="excerpt"
+									onChange={handleChange}
+									multiline
+									rows={4}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									id="slug"
+									label="Post URL Slug"
+									name="slug"
+									autoComplete="slug"
+									value={postData.slug}
+									onChange={handleChange}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									id="content"
+									label="Description"
+									name="content"
+									autoComplete="content"
+									onChange={handleChange}
+									multiline
+									rows={4}
+								/>
+							</Grid>
+							<Grid item xs={12}>							
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									type="datetime-local"
+									id="eventdate"			
+									name="eventdate"
+									inputProps={{
+										min: new Date().toISOString().slice(0, 16),
+									  }}
+									autoComplete="eventdate"                  
+									onChange={handleChange}                                
+								/>
+							</Grid>
+							<Grid item xs={12}>							
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									id="evenaddress"
+									label="Event Address"			
+									name="eventaddress"
+									autoComplete="eventAddress"              
+									onChange={handleChange}                                
+								/>
+							</Grid>
+							<Grid item xs={12}>							
+								<TextField
+									variant="outlined"
+									required
+									fullWidth
+									id="postattendee"
+									label="Event Attendees"
+									placeholder="Enter attendee email addresses (separated by commas)"			
+									name="postattendee"
+									autoComplete="postattendee" 
+									multiline
+									rows={4}             
+									onChange={handleChange}                                
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<InputLabel id="eventtypeLabel">Event Type</InputLabel>
+									<Select
+										variant="outlined"
+										required
+										fullWidth
+										labelId="eventtypeLabel"
+										id="eventoption"
+										name='eventoption'
+										label="Event Type"
+										onChange={handleChange}
+									>
+										<MenuItem value={'public'}>Public Event</MenuItem>
+										<MenuItem value={'private'}>Private Event</MenuItem>
+									</Select>
+							</Grid>
+							<Grid item xs={12}>
+							<label htmlFor="post-image">
+								<IconButton color="primary" aria-label="upload picture" component="span">
+									<PhotoCamera />
+								</IconButton>
+							</label>
+							<input
+								accept="image/*"
+								className={classes.input}
+								id="post-image"
 								onChange={handleChange}
+								name="image"
+								type="file"
 							/>
+							</Grid>
 						</Grid>
+						<div>
+							<Container  maxWidth="md"  id="map" >
+										<Card className={classes.card} style={{'borderRadius': '25px'}}>		
+												<CardMedia
+													className={classes.cardMedia}
+													ref={mapElement}
+												/>
+											<CardContent>					
+												<Grid
+													container
+													direction="row"
+													justifyContent="center"
+													alignItems="space-around"
+													>
+														<TextField
+															variant="outlined"
+															name="longitude"
+															label="Longitude"
+															id="longitude"
+															value={longitude}							
+															size="small"
+															placeholder="Enter Longitude"
+															onChange={handleChangeLn}
+														/>
+														<Divider orientation="vertical" variant="middle"flexItem />
+														<TextField
+															variant="outlined"
+
+															name="latitude"
+															label="Latitude"
+															id="latitude"
+															value={latitude}							
+															size="small"
+															placeholder="Enter Latitude"
+															onChange={handleChangeLt}
+														/>							
+												</Grid>
+											</CardContent>
+											<CardActions>
+												
+											</CardActions>
+										</Card>
+								</Container> 
+						</div>
 						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="excerpt"
-								label="Post Excerpt"
-								name="excerpt"
-								autoComplete="excerpt"
-								onChange={handleChange}
-								multiline
-								rows={4}
-							/>
+							<Fab
+								type = "submit"
+								variant="extended"
+								item xs={12}
+								size="large"
+								color="primary"
+								aria-label="add"
+								onClick={handleSubmit}
+								>
+								<DirectionsWalkRounded className={classes.extendedIcon} />
+								Create Event
+							</Fab>
 						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="slug"
-								label="Post URL Slug"
-								name="slug"
-								autoComplete="slug"
-								value={postData.slug}
-								onChange={handleChange}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="content"
-								label="content"
-								name="content"
-								autoComplete="content"
-								onChange={handleChange}
-								multiline
-								rows={4}
-							/>
-						</Grid>
-                        <Grid item xs={12}>							
-                            <TextField
-								variant="outlined"
-								required
-								fullWidth
-                                type="datetime-local"
-								id="eventdate"			
-								name="eventdate"
-								autoComplete="eventdate"                  
-								onChange={handleChange}                                
-							/>
-						</Grid>
-                       <label htmlFor="post-image">
-                            <IconButton color="primary" aria-label="upload picture" component="span">
-                                <PhotoCamera />
-                            </IconButton>
-                        </label>
-                        <input
-							accept="image/*"
-							className={classes.input}
-							id="post-image"
-							onChange={handleChange}
-							name="image"
-							type="file"
-						/>
-                        
-					</Grid>
-                    <Grid item xs={12} >
-                        <Fab
-                        type = "submit"
-						variant="extended"
-                        item xs={12}
-						size="large"
-						color="primary"
-						aria-label="add"
-                        onClick={handleSubmit}
-						>
-						<DirectionsWalkRounded className={classes.extendedIcon} />
-						Create Event
-					</Fab>
-                    </Grid>
-                    
-				</form>
-			</div>
-		</Container>
+						
+					</form>
+				</div>
+			</Container>
+			}
+		</>
 	);
 }

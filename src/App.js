@@ -6,7 +6,6 @@ import Posts from './components/posts/posts';
 import PostLoadingComponent from './components/posts/postLoading';
 import axiosInstance from './axios';
 
-import TomtomMaps from './components/Maps/TomTomMapview';
 
 //MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,14 +13,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
-import EventNoteRoundedIcon from '@material-ui/icons/EventNoteRounded';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Box from '@material-ui/core/Box';
@@ -105,52 +100,47 @@ function App() {
 				<PostLoading isLoading={appState.loading} posts={appState.posts} />
 				<br />
 				<Container  maxWidth="md"  id="map" >
-				<Card className={classes.card} style={{'borderRadius': '25px'}}>		
-						<CardMedia
-							className={classes.cardMedia}
-							ref={mapElement}
+					<Card className={classes.card} style={{'borderRadius': '25px'}}>		
+							<CardMedia
+								className={classes.cardMedia}
+								ref={mapElement}
 
-						/>
-					<CardContent>					
-					<Grid
-						container
-						direction="row"
-						justifyContent="center"
-						alignItems="space-around"
-						>
-							<TextField
-								variant="outlined"
-								name="longitude"
-								label="Longitude"
-								id="longitude"
-								value={longitude}							
-								size="small"
-								placeholder="Enter Longitude"
-								onChange={handleChangeLn}
 							/>
-							<Divider orientation="vertical" variant="middle"flexItem />
-							<TextField
-								variant="outlined"
+						<CardContent>					
+							<Grid
+								container
+								direction="row"
+								justifyContent="center"
+								alignItems="space-around"
+								>
+									<TextField
+										variant="outlined"
+										name="longitude"
+										label="Longitude"
+										id="longitude"
+										value={longitude}							
+										size="small"
+										placeholder="Enter Longitude"
+										onChange={handleChangeLn}
+									/>
+									<Divider orientation="vertical" variant="middle"flexItem />
+									<TextField
+										variant="outlined"
 
-								name="latitude"
-								label="Latitude"
-								id="latitude"
-								value={latitude}							
-								size="small"
-								placeholder="Enter Latitude"
-								onChange={handleChangeLt}
-							/>							
-					</Grid>
-
-					
-						
-
-				
-					</CardContent>
-					<CardActions>
-						
-					</CardActions>
-				</Card>
+										name="latitude"
+										label="Latitude"
+										id="latitude"
+										value={latitude}							
+										size="small"
+										placeholder="Enter Latitude"
+										onChange={handleChangeLt}
+									/>							
+							</Grid>
+						</CardContent>
+						<CardActions>
+							
+						</CardActions>
+					</Card>
 				</Container> 
 				
 
