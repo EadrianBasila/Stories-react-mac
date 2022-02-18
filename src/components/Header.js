@@ -136,7 +136,7 @@ function Header() {
 								<MenuItem 
 									onClick={handleClose} 
 									component={NavLink}
-									to="/">
+									to="/user">
 									My Profile
 								</MenuItem>
 
@@ -170,3 +170,4 @@ function Header() {
 }
 
 export default Header;
+

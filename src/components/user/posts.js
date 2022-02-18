@@ -1,4 +1,8 @@
 import React from 'react';
+import axiosInstance from '../../axios';
+import { useHistory } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+//Material-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
@@ -41,10 +45,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Posts = (props) => {
+
+	var authorID = 1;
+
+    async function getToken() {
+        //console.log('***************************************************************');
+        const token = await localStorage.getItem('access_token');
+        //console.log('undecodedtoken: ',token); 
+        //console.log('Titiw');
+        const decoded = jwt_decode(token);
+        //console.log('***************************************************************');
+        console.log('Decoded data from token', decoded);
+        const getID =  decoded["user_id"];
+        //console.log('***************************************************************');
+        let userID = JSON.stringify(getID);
+        //console.log('User ID from token', userID);
+        //console.log(typeof userID);
+        return userID;
+    }
+    
+    console.log('Initial User ID is : ', authorID);
+    const getID = async () => {
+        const data = await getToken();
+        //console.log(data);
+        return data;
+    }
+
+    //working
+    
+    getID().then(data => {
+        const dataID = parseInt(data);
+        authorID = dataID;
+        console.log('Final User ID is : ', authorID);
+        //console.log(typeof authorID);
+        return authorID;    
+    }).catch(error => {
+        console.log('User ID fetch failed: ', error);
+    });
+
 	const { posts } = props;
 	const classes = useStyles();
 	if (!posts || posts.length === 0) return <p>Can not find any posts, sorry</p>;
-	
+	// authorID  == id
     return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
@@ -61,7 +103,9 @@ const Posts = (props) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{posts.map((post) => {
+								{posts.filter(function (post) {
+									return post.id == authorID;
+								}).map((post) => {
 									return (
 										<TableRow>
 											<TableCell component="th" scope="row">

@@ -54,7 +54,9 @@ const Posts = (props) => {
 								<TableRow>
 									<TableCell>Id</TableCell>
 									<TableCell align="left">Category</TableCell>
+									<TableCell align="left">Author</TableCell>
 									<TableCell align="left">Title</TableCell>
+									<TableCell align="left">Response</TableCell>
 									<TableCell align="left">Action</TableCell>
 								</TableRow>
 							</TableHead>
@@ -66,7 +68,7 @@ const Posts = (props) => {
 												{post.id}
 											</TableCell>
 											<TableCell align="left">{post.category}</TableCell>
-
+											<TableCell align="left">Author: {post.id}</TableCell>
 											<TableCell align="left">
 												<Link
 													color="textPrimary"
@@ -75,6 +77,10 @@ const Posts = (props) => {
 												>
 													{post.title}
 												</Link>
+											</TableCell>
+
+											<TableCell align="left">
+												{post.eventresponse}
 											</TableCell>
 
 											<TableCell align="left">
