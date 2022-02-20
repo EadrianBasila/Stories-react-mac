@@ -253,7 +253,7 @@ export default function Create() {
 								<TextField
 								
 									variant="outlined"
-									required
+									
 									fullWidth
 									id="title"
 									label="Post Title"
@@ -279,7 +279,7 @@ export default function Create() {
 							<Grid item xs={12}>
 								<TextField
 									variant="outlined"
-									required
+									
 									fullWidth
 									id="slug"
 									label="Post URL Slug"
@@ -306,7 +306,7 @@ export default function Create() {
 							<Grid item xs={12}>							
 								<TextField
 									variant="outlined"
-									required
+									
 									fullWidth
 									type="datetime-local"
 									id="eventdate"			
@@ -321,7 +321,7 @@ export default function Create() {
 							<Grid item xs={12}>							
 								<TextField
 									variant="outlined"
-									required
+									
 									fullWidth
 									id="evenaddress"
 									label="Event Address"			
@@ -333,7 +333,7 @@ export default function Create() {
 							<Grid item xs={12}>							
 								<TextField
 									variant="outlined"
-									required
+									
 									fullWidth
 									id="postattendee"
 									label="Event Attendees"
@@ -349,7 +349,7 @@ export default function Create() {
 								<InputLabel id="eventtypeLabel">Event Type</InputLabel>
 									<Select
 										variant="outlined"
-										required
+										
 										fullWidth
 										labelId="eventtypeLabel"
 										id="eventoption"

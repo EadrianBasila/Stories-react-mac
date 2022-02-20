@@ -1,9 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useParams } from 'react-router-dom';
+
 //TomtomMaps
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
+
+//UI Neumorphism
+
+import { Card, CardHeader, Fab, TextArea, Tooltip, Button } from 'ui-neumorphism'
+import 'ui-neumorphism/dist/index.css'
 
 
 //MaterialUI
@@ -13,21 +19,23 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
-import Fab from '@material-ui/core/Fab';
+//import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
+import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
+
+
 // Maps
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import Box from '@material-ui/core/Box';
-import AlternateEmailRoundedIcon from '@material-ui/icons/AlternateEmailRounded';
+
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		//style={{ backgroundImage: `url(${data.posts.image})` }},
 	},
 	extendedIcon: {
 		marginRight: theme.spacing(1),
@@ -60,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
 
 	},
 	cardMedia: {
+		//paddingTop: '56.25%', // 16:9
+		height: '300px',
+	},
+	cardMediaB: {
 		//paddingTop: '56.25%', // 16:9
 		height: '500px',
 	},
@@ -128,107 +139,183 @@ export default function Post() {
 		
 		<Container component="main" maxWidth="md" >
 			<CssBaseline />
-			<div className={classes.paper} >
-				<Container maxWidth="md">
-					<div>
-						<img src={data.posts.image} height="100px" width="md"/>
-					</div>
-
-					<Typography
-						component="h1"
-						variant="h2"
-						align="center"
-						color="textPrimary"
-						
-					>
-						{data.posts.title}
-					</Typography>
-					<Typography
-						component="h1"
-						variant="h6"
-						align="center"
-						color="textPrimary"
-						gutterBottom
-					>
-						<CalendarTodayRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Date: {data.posts.eventdate} 
-					</Typography>
-					<Typography
-						component="h1"
-						variant="h6"
-						align="center"
-						color="textPrimary"
-						gutterBottom
-					>
-						<LocationOnRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Address: {data.posts.eventaddress} 
-					</Typography>
-					<Typography
-						component="h1"
-						variant="h6"
-						align="center"
-						color="textPrimary"
-						gutterBottom
-					>
-						<PeopleRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> People Attending: {data.posts.eventresponse}
-					</Typography>
-					<Typography
-						variant="h5"
-						align="center"
-						color="textSecondary"
-						paragraph
-					>
-						{data.posts.excerpt}
-					</Typography>
-					<Typography
-						variant="h4"
-						align="center"
-						color="textSecondary"
-						paragraph
-					>
-						{data.posts.content}
-					</Typography>
-				
-				</Container>
-				
-			</div>
 			<div>
 				<Container  maxWidth="md"  id="map" >
-							<Card className={classes.card} style={{'borderRadius': '25px'}}>		
-									<CardMedia
-										className={classes.cardMedia}
-										ref={mapElement}
-									/>
-								<CardContent>					
-									<Grid
-										container
-										direction="row"
-										justifyContent="center"
-										alignItems="space-around"
-										>
-											<TextField 
-												required
-												size ="medium"
-												className={classes.textField} 
-												id="respondeeEmail" 
-												label="Your Email" 
-												type="search" 
-												variant="outlined" />
-											<Divider orientation="vertical" variant="middle"flexItem />
-											<Fab
-												variant="extended"
-												size="large"
-												color="primary"
-												aria-label="add"
-												>
-												<DirectionsWalkRounded className={classes.extendedIcon} />
-												Join Event
-											</Fab>				
-									</Grid>
-								</CardContent>
-								<CardActions>
+				<Card rounded>
+						<CardHeader 						
+							title = {
+								<Typography
+									component="h1"
+									variant="h3"
+									align="left"
+									color="textPrimary"
+									style={{ marginTop: '10px'}}
+									>
+									{data.posts.title}
+								</Typography>
+							}
+
+							subtitle = {
+								<Typography
+									component="h3"
+									variant="h5"
+									align="left"
+									color="textPrimary"
 									
-								</CardActions>
-							</Card>
-					</Container> 
+									>
+									{data.posts.excerpt}
+								</Typography>
+							}							
+							>							
+						</CardHeader>
+
+						<CardMedia
+								className={classes.cardMedia}
+								image={data.posts.image}
+								title={data.posts.title}
+							/>
+
+						<CardContent>
+							<div style={{display: 'flex', justifyContent:'right', marginTop:'20px'}}>
+								<Tooltip
+									left
+									inset
+									style={{marginRight: '10px'}}								
+									content={<div>
+										Attending: {data.posts.eventresponse}</div>}
+									>
+									<Button rounded>
+										<PeopleRoundedIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+
+								<Tooltip
+									left
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div> 
+										Date: {data.posts.eventdate}</div>}
+									>
+									<Button rounded>
+										<CalendarTodayRoundedIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+
+								<Tooltip
+									left
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div>
+										Type: {data.posts.eventoption}</div>}
+									>
+									<Button rounded>
+										<AccountBalanceIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+
+								<Tooltip
+									left
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div> 
+										Event Code: {data.posts.slug}</div>}
+									>
+									<Button rounded>
+										<LinkRoundedIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+
+
+							</div>					
+							
+
+						</CardContent>
+						<CardActions>
+							<Typography
+								component="h1"
+								variant="h6"
+								align="left"
+								color="textPrimary"
+								style={{marginLeft: '20px', marginBottom: '10px'}}
+								>
+								{data.posts.content}
+							</Typography>
+						</CardActions>
+					</Card>
+
+					<Card rounded>
+						<CardHeader
+							title={
+								<div style={{display: 'flex', justifyContent:'left', marginTop:'15px'}}>
+								<Tooltip
+									bottom
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div>
+										Address: {data.posts.eventaddress}</div>}
+									>
+									<Button rounded>
+										<LocationOnRoundedIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+								<Tooltip
+									bottom
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div> 
+										Latitude:{data.posts.eventlat} Longitude: {data.posts.eventlon}</div>}
+									>
+									<Button rounded>
+										<LocationSearchingIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+							</div>
+							}
+							>
+							
+						</CardHeader>
+						<CardMedia
+							className={classes.cardMediaB}
+							ref={mapElement}
+						/>
+						<CardContent>					
+							<Grid
+								container
+								direction="row"
+								justifyContent="center"
+								alignItems="space-around"
+								>
+									<TextField 
+										required
+										size ="medium"
+										className={classes.textField} 
+										id="respondeeEmail" 
+										label="Your Email" 
+										type="search" 
+										variant="outlined" />
+									<Divider orientation="vertical" variant="middle"flexItem />
+									<Fab
+										variant="extended"
+										size="large"
+										color="primary"
+										aria-label="add"
+										>
+										<DirectionsWalkRounded className={classes.extendedIcon} />
+										Join Event
+									</Fab>				
+							</Grid>
+						</CardContent>
+						<CardActions>
+							
+						</CardActions>
+					</Card>
+				</Container> 
 			</div> 			
 		</Container>
 	);

@@ -1,4 +1,7 @@
 import React from 'react';
+import jwt_decode from 'jwt-decode';
+
+//Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
@@ -41,6 +44,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Posts = (props) => {
+
+	var authorID = 1;
+
+    async function getToken() {
+        //console.log('***************************************************************');
+        const token = await localStorage.getItem('access_token');
+        //console.log('undecodedtoken: ',token); 
+        //console.log('Titiw');
+        const decoded = jwt_decode(token);
+        //console.log('***************************************************************');
+        console.log('Decoded data from token', decoded);
+        const getID =  decoded["user_id"];
+        //console.log('***************************************************************');
+        let userID = JSON.stringify(getID);
+        //console.log('User ID from token', userID);
+        //console.log(typeof userID);
+        return userID;
+    }
+    
+    console.log('Initial User ID is : ', authorID);
+    const getID = async () => {
+        const data = await getToken();
+        //console.log(data);
+        return data;
+    }
+
+    //working
+    
+    getID().then(data => {
+        const dataID = parseInt(data);
+        authorID = dataID;
+        console.log('Final User ID is : ', authorID);
+        //console.log(typeof authorID);
+        return authorID;    
+    }).catch(error => {
+        console.log('User ID fetch failed: ', error);
+    });
+
 	const { posts } = props;
 	const classes = useStyles();
 	if (!posts || posts.length === 0) return <p>Can not find any posts, sorry</p>;
@@ -103,13 +144,13 @@ const Posts = (props) => {
 									);
 								})}
 								<TableRow>
-									<TableCell colSpan={4} align="right">
+									<TableCell colSpan={6} align="right">
 										<Button
 											href={'/admin/create'}
 											variant="contained"
 											color="primary"
 										>
-											New Post
+											Create New Post
 										</Button>
 									</TableCell>
 								</TableRow>

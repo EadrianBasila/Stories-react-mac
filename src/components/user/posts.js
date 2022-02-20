@@ -1,6 +1,4 @@
 import React from 'react';
-import axiosInstance from '../../axios';
-import { useHistory } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 //Material-UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -104,7 +102,8 @@ const Posts = (props) => {
 							</TableHead>
 							<TableBody>
 								{posts.filter(function (post) {
-									return post.id == authorID;
+									console.log('Post author ID is : ', post.author);
+									return post.author == authorID;
 								}).map((post) => {
 									return (
 										<TableRow>
@@ -152,13 +151,13 @@ const Posts = (props) => {
 									);
 								})}
 								<TableRow>
-									<TableCell colSpan={4} align="right">
+									<TableCell colSpan={5} align="right">
 										<Button
 											href={'/user/create'}
 											variant="contained"
 											color="primary"
 										>
-											New Post
+											Create New Story
 										</Button>
 									</TableCell>
 								</TableRow>

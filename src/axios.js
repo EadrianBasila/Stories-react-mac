@@ -78,7 +78,7 @@ axiosInstance.interceptors.response.use(
 				}
 			} else {
 				console.log('Refresh token not available.');
-				alert('Refresh token not available. PLease sign-out and sign-in again.');
+				alert('Refresh token not available. Please sign-out and sign-in again.');
 				//window.location.href = '/logout/'; //remove if not working
 				window.location.href = '/login/';
 			}

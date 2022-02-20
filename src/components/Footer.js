@@ -6,9 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 
+//Nuemorphism
+import { Divider } from 'ui-neumorphism'
+import 'ui-neumorphism/dist/index.css'
+
 const useStyles = makeStyles((theme) => ({
 	footer: {
-		borderTop: `1px solid ${theme.palette.divider}`,
 		marginTop: theme.spacing(8),
 		paddingTop: theme.spacing(3),
 		paddingBottom: theme.spacing(3),
@@ -85,6 +88,7 @@ function Footer() {
 						</Grid>
 					))}
 				</Grid> */}
+				<Divider />
 				<Box mt={5}>
 					<Copyright />
 				</Box>

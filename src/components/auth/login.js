@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
+
+//UI Neumorphism
+import { Button } from 'ui-neumorphism';
+import { Card, CardContent } from 'ui-neumorphism';
+import 'ui-neumorphism/dist/index.css';
+
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -23,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 	},
 	avatar: {
+		marginTop: '20px',
 		margin: theme.spacing(1),
 		backgroundColor: theme.palette.secondary.main,
 	},
@@ -31,8 +38,15 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(1),
 	},
 	submit: {
+		display: 'flex',
 		margin: theme.spacing(3, 0, 2),
 	},
+	textField: {
+		[`& fieldset`]: {
+		  borderRadius: 30,
+		},
+	},
+	
 }));
 
 export default function SignIn() {
@@ -78,59 +92,80 @@ export default function SignIn() {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}></Avatar>
-				<Typography component="h1" variant="h5">
-					Sign in
-				</Typography>
+				
 				<form className={classes.form} noValidate>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="Email Address"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						style={{'borderRadius': '20px'}}
-						onChange={handleChange}
-					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="Password"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						onChange={handleChange}
-					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-						onClick={handleSubmit}
-					>
-						Sign In
-					</Button>
-					<Grid container justify='center'>
+					<Card rounded>
+						<div 
+							style={{
+								display: 'flex',  
+								justifyContent:'center', 
+								alignItems:'center', 
+								flexDirection:'column', 
+								marginTop:'20px'}}
+							>
+							<Avatar className={classes.avatar}></Avatar>
+							<Typography component="h1" variant="h5">
+								Sign in
+							</Typography>
+						</div>
 						
-						<Grid item>
-							<Link href="#" variant="body2" component={NavLink}
-								to="/register">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
+						<CardContent>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								id="email"
+								label="Email Address"
+								name="email"
+								autoComplete="email"
+								autoFocus
+								className={classes.textField}
+								onChange={handleChange}
+							/>
+							<TextField
+								variant="outlined"
+								margin="normal"
+								required
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"								
+								autoComplete="current-password"
+								className={classes.textField}
+								onChange={handleChange}
+							/>
+							<br/>
+							<FormControlLabel								
+								control={<Checkbox value="remember" color="primary" />}
+								label="Remember me"
+							/>
+							<br/>
+							<Button
+								type="submit"
+								size='large'
+								variant="contained"
+								color="primary"
+								className={classes.submit}
+								onClick={handleSubmit}
+							>
+								Sign In
+							</Button>
+							<Grid container justify='center'>
+								
+								<Grid item>
+									<Link href="#" variant="body2" component={NavLink}
+										to="/register">
+										{"Don't have an account? Sign Up"}
+									</Link>
+								</Grid>
+							</Grid>
+							<br/>
+						</CardContent>
+						
+					</Card>
+					
 				</form>
 			</div>
 		</Container>
