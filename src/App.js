@@ -25,6 +25,7 @@ import Container from '@material-ui/core/Container';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -117,55 +118,69 @@ function App() {
 				<br/>
 				<PostLoading isLoading={appState.loading} posts={appState.posts} />
 				<br />
+				<br />
 				<Container  maxWidth="md"  id="map" className='classes.colorized'>
 
 					<Card rounded elevation={2}>
+						<CardActions>
+							
+						</CardActions>
 						<CardHeader>
-							<Typography			
-								component="h1"
-								variant="h5"
-								align="center"
-								color="textPrimary"
-								>
-								Events Around You!
-							</Typography>
-						</CardHeader>		
+						<Typography
+									component="h1"
+									variant="h3"
+									align="center"
+									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+									>
+									Events Around You!
+								</Typography>					
+						</CardHeader>	
+
 						<CardMedia
-						dark
+							dark
 							className={classes.cardMedia}
 							ref={mapElement}
 
 						/>
-						<CardContent>					
+						<CardContent>						
 							<Grid
 								container
 								direction="row"
 								justifyContent="center"
 								alignItems="space-around"
 								>
-									<TextField
-										variant="outlined"
-										name="longitude"
-										label="Longitude"
-										id="longitude"
-										value={longitude}							
-										size="medium"
-										className={classes.textField}
-										placeholder="Enter Longitude"
-										onChange={handleChangeLn}
-									/>
+									<Card inset rounded>
+										<CardHeader>
+											<TextField											
+												variant="standard"
+												id="longitude"
+												placeholder="Enter Longitude"
+												label="Longitude"
+												name="longitude"
+												size="small"
+												value={longitude}
+												onChange={handleChangeLn}	
+												InputProps={{ disableUnderline: true }}
+											/>			
+										</CardHeader>															
+									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />
-									<TextField
-										variant="outlined"
-										label="Latitude"
-										name="latitude"
-										id="latitude"
-										value={latitude}							
-										size="medium"
-										className={classes.textField}
-										placeholder="Enter Latitude"
-										onChange={handleChangeLt}
-									/>							
+									<Card inset rounded>
+										<CardHeader>
+											<TextField											
+												variant="standard"
+												id="latitude"
+												placeholder="Enter Latitude"
+												label="Latitude"
+												name="latitude"
+												size="small"
+												value={latitude}
+												onChange={handleChangeLt}	
+												InputProps={{ disableUnderline: true }}
+											/>			
+										</CardHeader>															
+									</Card>	
+												
 							</Grid>
 						</CardContent>
 						<CardActions>

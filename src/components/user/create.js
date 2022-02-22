@@ -250,10 +250,9 @@ export default function Create() {
 					<form className={classes.form} noValidate>
 						<Grid container spacing={2}>
 							<Grid item xs={12}>
-								<TextField
-								
+								<TextField								
 									variant="outlined"
-									
+									required
 									fullWidth
 									id="title"
 									label="Post Title"

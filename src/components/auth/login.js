@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 //UI Neumorphism
 import { Button } from 'ui-neumorphism';
-import { Card, CardContent } from 'ui-neumorphism';
+import { Card, CardContent, CardHeader, Checkbox } from 'ui-neumorphism';
 import 'ui-neumorphism/dist/index.css';
 
 //MaterialUI
@@ -13,13 +13,14 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import { NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -110,43 +111,60 @@ export default function SignIn() {
 						</div>
 						
 						<CardContent>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
-								className={classes.textField}
-								onChange={handleChange}
-							/>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"								
-								autoComplete="current-password"
-								className={classes.textField}
-								onChange={handleChange}
-							/>
-							<br/>
+							<Grid container justify='center'>
+								<Grid item xs={12}>
+									<Card inset rounded>
+										<CardHeader none/>
+										<Box m={2}>
+											<TextField											
+												variant="standard"
+												margin="normal"
+												required
+												fullWidth
+												id="email"
+												placeholder="Email Address"
+												name="email"
+												autoComplete="email"
+												autoFocus
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>
+										</Box>						
+									</Card>
+								</Grid>
+								<Grid item xs={12}>
+									<Card inset rounded>
+										<CardHeader none/>
+										<Box m={2}>
+											<TextField											
+												variant="standard"
+												margin="normal"
+												required
+												fullWidth
+												id="password"
+												placeholder="Password"
+												name="password"
+												autoComplete="current-password"
+												autoFocus
+												type="password"
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>
+										</Box>						
+									</Card>
+								</Grid>
+							</Grid>
 							<FormControlLabel								
-								control={<Checkbox value="remember" color="primary" />}
+								control={<Checkbox value="remember" color='var(--primary)' />}
 								label="Remember me"
 							/>
-							<br/>
 							<Button
 								type="submit"
 								size='large'
 								variant="contained"
-								color="primary"
+								color="var(--primary)"
 								className={classes.submit}
 								onClick={handleSubmit}
 							>

@@ -141,6 +141,7 @@ export default function Post() {
 			<CssBaseline />
 			<div>
 				<Container  maxWidth="md"  id="map" >
+				<br/>
 				<Card rounded>
 						<CardHeader 						
 							title = {
@@ -148,8 +149,7 @@ export default function Post() {
 									component="h1"
 									variant="h3"
 									align="left"
-									color="textPrimary"
-									style={{ marginTop: '10px'}}
+									style={{ marginTop: '10px',  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
 									>
 									{data.posts.title}
 								</Typography>
@@ -157,11 +157,10 @@ export default function Post() {
 
 							subtitle = {
 								<Typography
-									component="h3"
 									variant="h5"
 									align="left"
 									color="textPrimary"
-									
+									style={{ marginTop: '5px',  color: '#8fa0a5', fontWeight: 'normal' }}
 									>
 									{data.posts.excerpt}
 								</Typography>
@@ -184,7 +183,7 @@ export default function Post() {
 									content={<div>
 										Attending: {data.posts.eventresponse}</div>}
 									>
-									<Button rounded>
+									<Button rounded  bgColor="#6197fb" color="#ffffff">
 										<PeopleRoundedIcon 
 										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
 									</Button>	
@@ -197,7 +196,7 @@ export default function Post() {
 									content={<div> 
 										Date: {data.posts.eventdate}</div>}
 									>
-									<Button rounded>
+									<Button rounded  bgColor="#6197fb" color="#ffffff">
 										<CalendarTodayRoundedIcon 
 										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
 									</Button>	
@@ -210,7 +209,7 @@ export default function Post() {
 									content={<div>
 										Type: {data.posts.eventoption}</div>}
 									>
-									<Button rounded>
+									<Button rounded  bgColor="#6197fb" color="#ffffff">
 										<AccountBalanceIcon 
 										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
 									</Button>	
@@ -223,8 +222,21 @@ export default function Post() {
 									content={<div> 
 										Event Code: {data.posts.slug}</div>}
 									>
-									<Button rounded>
+									<Button rounded  bgColor="#6197fb" color="#ffffff">
 										<LinkRoundedIcon 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+									</Button>	
+								</Tooltip>
+								
+								<Tooltip
+									left
+									inset	
+									style={{marginRight: '10px'}}								
+									content={<div> 
+										Latitude:{data.posts.eventlat} Longitude: {data.posts.eventlon}</div>}
+									>
+									<Button  rounded bgColor="#6197fb" color="#ffffff"> 
+									<LocationSearchingIcon
 										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
 									</Button>	
 								</Tooltip>
@@ -240,41 +252,30 @@ export default function Post() {
 								variant="h6"
 								align="left"
 								color="textPrimary"
-								style={{marginLeft: '20px', marginBottom: '10px'}}
+								style={{marginLeft: '20px', marginBottom: '10px', color: '#5b6c71'}}
 								>
 								{data.posts.content}
 							</Typography>
 						</CardActions>
 					</Card>
-
+								
 					<Card rounded>
 						<CardHeader
 							title={
 								<div style={{display: 'flex', justifyContent:'left', marginTop:'15px'}}>
 								<Tooltip
-									bottom
+									right
 									inset	
 									style={{marginRight: '10px'}}								
 									content={<div>
-										Address: {data.posts.eventaddress}</div>}
+										Event Address: {data.posts.eventaddress}</div>}
 									>
-									<Button rounded>
+									<Button rounded  bgColor="#6197fb" color="#ffffff">
 										<LocationOnRoundedIcon 
-										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
+										style={{'fontSize': '20px','verticalAlign':'middle'}}/>{data.posts.eventaddress}
 									</Button>	
 								</Tooltip>
-								<Tooltip
-									bottom
-									inset	
-									style={{marginRight: '10px'}}								
-									content={<div> 
-										Latitude:{data.posts.eventlat} Longitude: {data.posts.eventlon}</div>}
-									>
-									<Button rounded>
-										<LocationSearchingIcon 
-										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
-									</Button>	
-								</Tooltip>
+								
 							</div>
 							}
 							>
@@ -289,22 +290,27 @@ export default function Post() {
 								container
 								direction="row"
 								justifyContent="center"
-								alignItems="space-around"
 								>
-									<TextField 
-										required
-										size ="medium"
-										className={classes.textField} 
-										id="respondeeEmail" 
-										label="Your Email" 
-										type="search" 
-										variant="outlined" />
+									<Card inset rounded>
+										<CardHeader>
+											<TextField											
+												variant="standard"
+												id="email"
+												placeholder="Enter Email"
+												name="email"
+												size="small"
+												InputProps={{ disableUnderline: true }}
+											/>			
+										</CardHeader>															
+									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />
 									<Fab
+										bgColor="#6197fb" 
+										color="#ffffff"
 										variant="extended"
 										size="large"
-										color="primary"
 										aria-label="add"
+										style={{margin: '10px'}}
 										>
 										<DirectionsWalkRounded className={classes.extendedIcon} />
 										Join Event

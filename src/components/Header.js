@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
 //Neumorphism
-import { Divider } from 'ui-neumorphism'
+import { Divider,} from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 //Material UI
@@ -17,6 +17,7 @@ import SearchBar from 'material-ui-search-bar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded';
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(1, 1.5),
 	},
 	toolbarTitle: {
+		marginLeft: theme.spacing(1),
 		flexGrow: 1,
 		
 	},
@@ -114,49 +116,64 @@ function Header() {
 					className={classes.appBar}
 				>
 					<Toolbar className={classes.toolbar} style={{'align': 'space-between'}} >
-						<IconButton 
+						<IconButton 						
 							color="inherit"
 							component={NavLink}
 							to="/user/create">
-							<AmpStoriesRoundedIcon style={{'fontSize': '30px'}}/>
+							<AmpStoriesRoundedIcon style={{'fontSize': '30px', 'color': '#387cfa'}}/>
 						</IconButton>
 																
 						<Typography
 							variant="h6"
 							color="inherit"
 							noWrap
-							className={classes.toolbarTitle}
-							
+							className={classes.toolbarTitle}							
 						>
 							<Link
+								style={{ textDecoration: 'none' }}
 								component={NavLink}
 								to="/"
 								underline="none"
 								color="textPrimary"
 							>
-								PUP iBarkada
+								<Typography
+									component="h1"
+									variant="h5"
+									align="left"
+									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+									>
+									PUP iBarkada
+								</Typography>
+								
 							</Link>
 						</Typography>					
-											
+
 						<SearchBar
 							value={data.search}
 							onChange={(newValue) => setData({ search: newValue })}
 							onRequestSearch={() => goSearch(data.search)}
-							style={{'borderRadius': '25px'}}
-						/>
+							InputProps={{ border: 'none' }}
+							style={{
+								backgroundColor: 'transparent',
+								border: 'none',
+								outline: 'none',
+								borderRadius: '30px',
+							}}/>	
+				
+		
 						
-						<IconButton
+						<IconButton 
 							color="inherit"
 							component={NavLink}
-							
 							to="/admin">
-							<AssignmentIndRoundedIcon style={{'fontSize': '30px'}}/>
+							<AssignmentIndRoundedIcon style={{'fontSize': '30px', 'color': '#387cfa'}}/>
 						</IconButton>
 							
 						
 											
 						{auth &&( <div>
-							<IconButton
+							<IconButton rounded
+
 								size="large"
 								aria-label="account of current user"
 								aria-controls="account-appbar"
@@ -164,7 +181,7 @@ function Header() {
 								onClick={handleMenu}
 								color="inherit"
 							>
-								<AccountCircle style={{'fontSize': '30px'}}/>
+								<AccountCircle style={{'fontSize': '30px', 'color': '#387cfa'}}/>
 							</IconButton>
 							<Menu
 								id="account-appbar"

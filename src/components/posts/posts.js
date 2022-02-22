@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 //UI Neumorphism
 import { Button } from 'ui-neumorphism'
-import { Card, CardHeader } from 'ui-neumorphism'
+import { Card, CardHeader, Chip } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 //MaterialUI
@@ -15,13 +15,14 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import EventNoteRoundedIcon from '@material-ui/icons/EventNoteRounded';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Box from '@material-ui/core/Box';
 import AlternateEmailRoundedIcon from '@material-ui/icons/AlternateEmailRounded';
+import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -52,13 +53,14 @@ const Posts = (props) => {
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
-				<Grid container spacing={6} alignItems="flex-end">
+				<Grid container spacing={6} alignItems="stretch">
 					{posts.map((post) => {
 						return (
 							// Enterprise card is full width at sm breakpoint
 							<Grid item key={post.id} xs={12} md={4}>
 								<Card rounded elevation={2}>
 									<Link
+										style={{ textDecoration: 'none' }}
 										color="textPrimary"
 										href={'post/' + post.slug}
 										className={classes.link}
@@ -68,6 +70,22 @@ const Posts = (props) => {
 										
 										
 									/>
+										<div style={{display: 'flex',  justifyContent:'left', alignItems:'left', margin:'10px'}}>
+											<Chip
+												size="small"
+												style={{'marginRight': '10px',  'backgroundColor':'#6197fb', 'color': '#ffffff' }}
+												prepend={<AccountBalanceIcon style={{'fontSize': '10px','verticalAlign':'middle', 'marginRight': '5px'}}/> }
+												>
+												{post.eventoption} event
+											</Chip>
+											<Chip
+												size="small"
+												style={{'marginRight': '10px',  'backgroundColor':'#6197fb', 'color': '#ffffff' }}
+												prepend={<PeopleRoundedIcon style={{'fontSize': '10px','verticalAlign':'middle' , 'marginRight': '5px'}}/> }
+												>
+												{post.eventresponse} 
+											</Chip>
+										</div>
 										<CardMedia
 											className={classes.cardMedia}
 											image={post.image}
@@ -75,10 +93,14 @@ const Posts = (props) => {
 										/>
 									</Link>
 									<CardContent className={classes.cardContent}>
-						
+										
+										
 										<div className={classes.postText}>
-											<Typography color="textSecondary">
-												{post.excerpt.substr(0, 50)}..
+											<Typography 
+												color="textSecondary"
+												style={{wordWrap: "break-word"}}
+											>
+												{post.excerpt.substr(0, 30)}..
 											</Typography>
 										</div>
 									</CardContent>
@@ -87,7 +109,7 @@ const Posts = (props) => {
 											<PopupState variant="popover" popupId="demo-popup-popover">
 											{(popupState) => (
 												<div>
-												<Button size="small" color="primary" {...bindTrigger(popupState)}>
+												<Button  rounded size="small"  color="#6197fb" {...bindTrigger(popupState)}>
 													<LinkRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Share											</Button>
 												<Popover
 													{...bindPopover(popupState)}
@@ -99,21 +121,23 @@ const Posts = (props) => {
 													vertical: 'top',
 													horizontal: 'center',
 													}}
-												>
+												>	
 													<Box p={2}>
-													<Typography> 
-														<AlternateEmailRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Code: {post.slug}
-													</Typography>
-													</Box>
+														<Typography> 
+															<AlternateEmailRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Code: {post.slug}
+														</Typography>
+													</Box> 
 												</Popover>
 												</div>
 											)}
 											</PopupState>
 											<Link
+												style={{ textDecoration: 'none' }}
 												color="textPrimary"
 												href={'post/' + post.slug}
 												className={classes.link}>
-												<Button size="small" color="primary">
+												
+												<Button rounded size="small"  color="#6197fb">
 													<EventNoteRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Learn More
 												</Button>
 											</Link>

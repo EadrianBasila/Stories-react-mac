@@ -1,5 +1,11 @@
 import React from 'react';
 import jwt_decode from 'jwt-decode';
+
+//UI Neumorphism
+
+import { Card, CardHeader, Fab, TextArea, Tooltip, Button, CardContent } from 'ui-neumorphism'
+import 'ui-neumorphism/dist/index.css'
+
 //Material-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -13,7 +19,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+//import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -88,83 +95,91 @@ const Posts = (props) => {
     return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
-				<Paper className={classes.root}>
-					<TableContainer className={classes.container}>
-						<Table stickyHeader aria-label="sticky table">
-							<TableHead>
-								<TableRow>
-									<TableCell>Id</TableCell>
-									<TableCell align="left">Category</TableCell>
-									<TableCell align="left">Title</TableCell>
-									<TableCell align="left">Response</TableCell>
-                                    <TableCell align="left">Action</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{posts.filter(function (post) {
-									console.log('Post author ID is : ', post.author);
-									return post.author == authorID;
-								}).map((post) => {
-									return (
+				<Card rounded>
+					<CardContent>
+						
+						<Paper className={classes.root} style={{backgroundColor:'transparent', color: 'transparent', outline:'none', borderRadius: '30px'}}>						
+							<TableContainer className={classes.container} >
+								<Table stickyHeader aria-label="sticky table">
+									<TableHead>
 										<TableRow>
-											<TableCell component="th" scope="row">
-												{post.id}
-											</TableCell>
-
-											<TableCell align="left">
-                                                {post.category}
-                                            </TableCell>
-
-											<TableCell align="left">
-												<Link
-													color="textPrimary"
-													href={'/post/' + post.slug}
-													className={classes.link}
-												>
-													{post.title}
-												</Link>
-											</TableCell>
-                                            
-                                            <TableCell align="left">
-												{post.eventresponse}
-											</TableCell>
-
-											<TableCell align="left">
-												<Link
-													color="textPrimary"
-													href={'/user/edit/' + post.id}
-													className={classes.link}
-												>
-													<EditIcon></EditIcon>
-												</Link>
-												<Link
-													color="textPrimary"
-													href={'/user/delete/' + post.id}
-													className={classes.link}
-												>
-													<DeleteForeverIcon></DeleteForeverIcon>
-												</Link>
-											</TableCell>
-
-                                            
+											<TableCell align="left">Id</TableCell>
+											<TableCell align="left">Category</TableCell>
+											<TableCell align="left">Title</TableCell>
+											<TableCell align="left">Response</TableCell>
+											<TableCell align="left">Action</TableCell>
 										</TableRow>
-									);
-								})}
-								<TableRow>
-									<TableCell colSpan={5} align="right">
-										<Button
-											href={'/user/create'}
-											variant="contained"
-											color="primary"
-										>
-											Create New Story
-										</Button>
-									</TableCell>
-								</TableRow>
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Paper>
+									</TableHead>
+									<TableBody>
+										{posts.filter(function (post) {
+											console.log('Post author ID is : ', post.author);
+											return post.author == authorID;
+										}).map((post) => {
+											return (
+												<TableRow>
+													<TableCell component="th" scope="row">
+														{post.id}
+													</TableCell>
+
+													<TableCell align="left">
+														{post.category}
+													</TableCell>
+
+													<TableCell align="left">
+														<Link
+															color="textPrimary"
+															href={'/post/' + post.slug}
+															className={classes.link}
+														>
+															{post.title}
+														</Link>
+													</TableCell>
+													
+													<TableCell align="left">
+														{post.eventresponse}
+													</TableCell>
+
+													<TableCell align="left">
+														<Link
+															color="textPrimary"
+															href={'/user/edit/' + post.id}
+															className={classes.link}
+														>
+															<EditIcon></EditIcon>
+														</Link>
+														<Link
+															color="textPrimary"
+															href={'/user/delete/' + post.id}
+															className={classes.link}
+														>
+															<DeleteForeverIcon></DeleteForeverIcon>
+														</Link>
+													</TableCell>
+
+													
+												</TableRow>
+											);
+										})}
+										<TableRow>
+											<TableCell colSpan={5} align="right">
+												<Button
+													rounded
+													href={'/user/create'}
+													variant="contained"
+													color="primary"
+												>
+													Create New Story
+												</Button>
+											</TableCell>
+										</TableRow>
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</Paper>					
+					</CardContent>
+					
+				</Card>
+				
 			</Container>
 		</React.Fragment>
 	);

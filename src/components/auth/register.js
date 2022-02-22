@@ -4,7 +4,7 @@ import { useHistory, NavLink} from 'react-router-dom';
 
 //UI Neumorphism
 import { Button } from 'ui-neumorphism';
-import { Card, CardContent } from 'ui-neumorphism';
+import { Card, CardContent, CardHeader, Checkbox } from 'ui-neumorphism';
 import 'ui-neumorphism/dist/index.css';
 
 //MaterialUI
@@ -12,9 +12,9 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -102,60 +102,85 @@ export default function SignUp() {
 							</Typography>
 						</div>
 						<CardContent>
-										<Grid container spacing={2}>
-									<Grid item xs={12}>
-										<TextField
-											className={classes.textField}
-											variant="outlined"
+					<Grid container justify='center' rowSpacing={1}>
+							<Grid item xs={12}>
+								<Card inset rounded>
+									<CardHeader none/>
+									<Box ml={2} mr={2}>
+										<TextField											
+											variant="standard"
+											margin="normal"
 											required
 											fullWidth
 											id="email"
-											label="Email Address"
+											placeholder="Email Address"
 											name="email"
 											autoComplete="email"
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid item xs={12}>
-										<TextField
+											autoFocus
 											className={classes.textField}
-											variant="outlined"
+											onChange={handleChange}
+											InputProps={{ disableUnderline: true }}
+										/>
+									</Box>						
+								</Card>
+							</Grid>
+							<Grid item xs={12}>
+								<Card inset rounded>
+									<CardHeader none/>
+									<Box ml={2} mr={2}>
+										<TextField											
+											variant="standard"
+											margin="normal"
 											required
 											fullWidth
-											width='340'
 											id="username"
-											label="Username"
+											placeholder="Username"
 											name="username"
 											autoComplete="username"
-											onChange={handleChange}
-										/>
-									</Grid>
-									<Grid item xs={12}>
-										<TextField
+											autoFocus
 											className={classes.textField}
-											variant="outlined"
+											onChange={handleChange}
+											InputProps={{ disableUnderline: true }}
+										/>
+									</Box>						
+								</Card>
+							</Grid>
+							<Grid item xs={12}>
+								<Card inset rounded>
+									<CardHeader none/>
+									<Box ml={2} mr={2}>
+										<TextField											
+											variant="standard"
+											margin="normal"
 											required
 											fullWidth
-											name="password"
-											label="Password"
-											type="password"
 											id="password"
+											placeholder="Password"
+											name="password"
 											autoComplete="current-password"
+											autoFocus
+											type="password"
+											className={classes.textField}
 											onChange={handleChange}
+											InputProps={{ disableUnderline: true }}
 										/>
-									</Grid>
-									<Grid item xs={12}>
-										<FormControlLabel
-											control={<Checkbox value="allowExtraEmails" color="primary" />}
-											label="I want to receive promotions and updates via email."
-										/>
-									</Grid>
-								</Grid>
+									</Box>						
+								</Card>
+							</Grid>
+						</Grid>
+						<br/>	
+						<Grid item xs={12}>
+							<FormControlLabel
+								control={<Checkbox value="allowExtraEmails" color="var(--primary)" />}
+								label="I want to receive updates via email."
+							/>
+						</Grid>	
+						<br/>	
 								<Button
 									type="submit"
 									fullWidth
 									variant="contained"
-									color="primary"
+									color="var(--primary)"
 									className={classes.submit}
 									onClick={handleSubmit}
 								>
