@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Create() {
+	//  fields = ('category', 'id', 'title', 'image', 'slug', 'author', 'excerpt', 'content', 'status', 'eventdate', 'eventresponse', 'eventoption', 'postattendee', 'eventaddress', 'eventlon', 'eventlat')
+
+	var authorID = localStorage.getItem("userID"); 
 	const history = useHistory();
 	const { id } = useParams();
 	const initialFormData = Object.freeze({
@@ -35,7 +38,15 @@ export default function Create() {
 		slug: '',
 		excerpt: '',
 		content: '',
+		status:'',
         eventdate: '',
+		eventresponse:'',
+		eventoption:'',		
+		postattendee:'',
+		eventaddress:'',
+		eventlon:'',
+		eventlat:'',
+
 	});
 
 	const [formData, updateFormData] = useState(initialFormData);
@@ -44,13 +55,22 @@ export default function Create() {
 		axiosInstance.get('admin/edit/postdetail/' + id).then((res) => {
 			updateFormData({
 				...formData,
+				['id']: res.data.id,
 				['title']: res.data.title,
 				['excerpt']: res.data.excerpt,
 				['slug']: res.data.slug,
 				['content']: res.data.content,
+				['status']: res.data.status,				
                 ['eventdate']: res.data.eventdate,
+				['eventresponse']: res.data.eventresponse,
+				['eventoption']: res.data.eventoption,
+				['postattendee']: res.data.postattendee,
+				['eventaddress']: res.data.eventaddress,
+				['eventlon']: res.data.eventlon,
+				['eventlat']: res.data.eventlat,
 			});
 			console.log(res.data);
+			console.log(formData);
 		});
 	}, [updateFormData]);
 
@@ -64,15 +84,25 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		console.log('======================================');
 		console.log(formData);
 
 		axiosInstance.put(`admin/edit/` + id + '/', {
+			id: formData.id,
 			title: formData.title,
 			slug: formData.slug,
-			author: 1,
+			author: authorID,
 			excerpt: formData.excerpt,
 			content: formData.content,
+			status: formData.status,
             eventdate: formData.eventdate,
+			eventresponse: formData.eventresponse,
+			eventoption: formData.eventoption,
+			postattendee: formData.postattendee,
+			eventaddress: formData.eventaddress,
+			eventlon: formData.eventlon,
+			eventlat: formData.eventlat,
+
 		});
 		history.push({
 			pathname: '/admin/',
@@ -157,6 +187,20 @@ export default function Create() {
 								name="eventdate"
 								autoComplete="eventdate" 
                                 value={formData.eventdate}               
+								onChange={handleChange}                                
+							/>
+						</Grid>
+						<Grid item xs={12}>							
+                            <TextField
+								variant="outlined"
+								required
+								fullWidth
+								id="postattendee"			
+								name="postattendee"
+								autoComplete="postattendee" 
+                                value={formData.postattendee} 
+								multiline
+								rows={8}              
 								onChange={handleChange}                                
 							/>
 						</Grid>

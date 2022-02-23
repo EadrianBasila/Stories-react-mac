@@ -84,7 +84,7 @@ const Posts = (props) => {
 										<div style={{display: 'flex',  justifyContent:'left', alignItems:'left', margin:'10px'}}>
 											<Chip
 												size="small"
-												style={{'marginRight': '10px',  'backgroundColor': post.eventoption ==='private' ? '#ff6666' : '#6197fb', 'color': '#ffffff' }}
+												style={{'marginRight': '10px',  'backgroundColor': post.eventoption ==='private' ? '#ff6666' : '#2db300', 'color': '#ffffff' }}
 												prepend={<AccountBalanceIcon style={{'fontSize': '10px','verticalAlign':'middle', 'marginRight': '5px'}}/> }
 												>
 												{post.eventoption} event

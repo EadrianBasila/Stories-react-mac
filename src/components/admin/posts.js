@@ -112,7 +112,7 @@ const Posts = (props) => {
 											<TableCell component="th" scope="row">
 												{post.id}
 											</TableCell>
-											<TableCell align="left">{post.category}</TableCell>
+											<TableCell align="left">{post.eventoption}</TableCell>
 											<TableCell align="left">Author: {post.author}</TableCell>
 											<TableCell align="left">
 												<Link

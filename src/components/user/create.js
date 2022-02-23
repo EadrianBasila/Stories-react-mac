@@ -311,7 +311,7 @@ export default function Create() {
 												id="content"
 												fullWidth
 												placeholder="Enter Event Content"
-												name="contenr"
+												name="content"
 												autoComplete="content"
 												className={classes.textField}
 												onChange={handleChange}
