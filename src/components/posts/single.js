@@ -68,18 +68,29 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardMedia: {
 		//paddingTop: '56.25%', // 16:9
-		height: '300px',
+		height: '350px',
 	},
 	cardMediaB: {
 		//paddingTop: '56.25%', // 16:9
 		height: '500px',
+	},
+	fancy : {
+		color:"#6197fb",
+		transition: theme.transitions.create(["background", "background-color"], {
+			duration: theme.transitions.duration.complex,
+		  }),
+		"&:hover": {
+			backgroundColor: '#6197fb',
+			color: '#ffffff',
+		    fontWeight: 'bold'
+		},
 	},
 }));
 
 export default function Post() {
 
 	//TomtomMaps
-
+	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
 	const mapElement = useRef();
 	const[map, setMap] = useState({});
 	const [longitude, setLongitude] = useState(121.01071);
@@ -167,15 +178,7 @@ export default function Post() {
 							}							
 							>							
 						</CardHeader>
-
-						<CardMedia
-								className={classes.cardMedia}
-								image={data.posts.image}
-								title={data.posts.title}
-							/>
-
-						<CardContent>
-							<div style={{display: 'flex', justifyContent:'right', marginTop:'20px'}}>
+						<div style={{display: 'flex', justifyContent:'right', marginTop:'5px', marginBottom: '10px'}}>
 								<Tooltip
 									left
 									inset
@@ -217,7 +220,8 @@ export default function Post() {
 
 								<Tooltip
 									left
-									inset	
+									inset
+
 									style={{marginRight: '10px'}}								
 									content={<div> 
 										Event Code: {data.posts.slug}</div>}
@@ -240,13 +244,14 @@ export default function Post() {
 										style={{'fontSize': '20px','verticalAlign':'middle'}}/> 
 									</Button>	
 								</Tooltip>
+							</div>	
+						<CardMedia
+								className={classes.cardMedia}
+								image={data.posts.image}
+								title={data.posts.title}
+							/>
 
-
-							</div>					
-							
-
-						</CardContent>
-						<CardActions>
+						<CardContent>
 							<Typography
 								component="h1"
 								variant="h6"
@@ -255,7 +260,11 @@ export default function Post() {
 								style={{marginLeft: '20px', marginBottom: '10px', color: '#5b6c71'}}
 								>
 								{data.posts.content}
-							</Typography>
+							</Typography>				
+						</CardContent>
+
+						<CardActions>
+							
 						</CardActions>
 					</Card>
 								
@@ -296,7 +305,9 @@ export default function Post() {
 											<TextField											
 												variant="standard"
 												id="email"
-												placeholder="Enter Email"
+												label="Your Email"
+												placeholder={userEmail}
+												value={userEmail}
 												name="email"
 												size="small"
 												InputProps={{ disableUnderline: true }}
@@ -305,6 +316,7 @@ export default function Post() {
 									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />
 									<Fab
+										disabled={data.posts.eventoption ==='private' ? true : false}
 										bgColor="#6197fb" 
 										color="#ffffff"
 										variant="extended"

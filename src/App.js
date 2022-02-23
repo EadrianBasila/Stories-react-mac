@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, } from 'react';
-
+import jwt_decode from 'jwt-decode';
 //UI Neumorphism
 import { Button, CardHeader } from 'ui-neumorphism'
 import { Card } from 'ui-neumorphism'
@@ -13,7 +13,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import Posts from './components/posts/posts';
 import PostLoadingComponent from './components/posts/postLoading';
 import axiosInstance from './axios';
-
+import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
 
 //MUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,6 +48,45 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
+	var authorID = 1;
+
+    async function getToken() {
+        //console.log('***************************************************************');
+        const token = await localStorage.getItem('access_token');
+        //console.log('undecodedtoken: ',token); 
+        //console.log('Titiw');
+        const decoded = jwt_decode(token);
+        //console.log('***************************************************************');
+        console.log('Decoded data from token', decoded);
+        const getID =  decoded["user_id"];
+        //console.log('***************************************************************');
+        let userID = JSON.stringify(getID);
+        //console.log('User ID from token', userID);
+        //console.log(typeof userID);
+        return userID;
+    }
+    
+    console.log('Initial User ID is : ', authorID);
+    const getID = async () => {
+        const data = await getToken();
+        //console.log(data);
+        return data;
+    }
+
+    //working
+    
+    getID().then(data => {
+        const dataID = parseInt(data);
+        authorID = dataID;
+        console.log('Final User ID is : ', authorID);
+        console.log(typeof authorID);
+		localStorage.setItem("userID", authorID);
+		console.log("UserID loaded to local storage");
+        return authorID;    
+    }).catch(error => {
+        console.log('User ID fetch failed: ', error);
+    });
+
 
 	const mapElement = useRef();
 	const[map, setMap] = useState({});
@@ -120,22 +159,19 @@ function App() {
 				<br />
 				<br />
 				<Container  maxWidth="md"  id="map" className='classes.colorized'>
-
 					<Card rounded elevation={2}>
-						<CardActions>
-							
+						<CardActions>							
 						</CardActions>
 						<CardHeader>
-						<Typography
-									component="h1"
-									variant="h3"
-									align="center"
-									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
-									>
-									Events Around You!
-								</Typography>					
+							<Typography
+								component="h1"
+								variant="h3"
+								align="center"
+								style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+								>
+								Events Around You!
+							</Typography>					
 						</CardHeader>	
-
 						<CardMedia
 							dark
 							className={classes.cardMedia}
@@ -179,8 +215,7 @@ function App() {
 												InputProps={{ disableUnderline: true }}
 											/>			
 										</CardHeader>															
-									</Card>	
-												
+									</Card>													
 							</Grid>
 						</CardContent>
 						<CardActions>

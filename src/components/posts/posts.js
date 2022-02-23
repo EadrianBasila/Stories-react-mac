@@ -44,6 +44,17 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'left',
 		marginBottom: theme.spacing(1),
 	},
+	fancy : {
+		color:"#6197fb",
+		transition: theme.transitions.create(["background", "background-color"], {
+			duration: theme.transitions.duration.complex,
+		  }),
+		"&:hover": {
+			backgroundColor: '#6197fb',
+			color: '#ffffff',
+		    fontWeight: 'bold'
+		},
+	},
 }));
 
 const Posts = (props) => {
@@ -73,7 +84,7 @@ const Posts = (props) => {
 										<div style={{display: 'flex',  justifyContent:'left', alignItems:'left', margin:'10px'}}>
 											<Chip
 												size="small"
-												style={{'marginRight': '10px',  'backgroundColor':'#6197fb', 'color': '#ffffff' }}
+												style={{'marginRight': '10px',  'backgroundColor': post.eventoption ==='private' ? '#ff6666' : '#6197fb', 'color': '#ffffff' }}
 												prepend={<AccountBalanceIcon style={{'fontSize': '10px','verticalAlign':'middle', 'marginRight': '5px'}}/> }
 												>
 												{post.eventoption} event
@@ -89,7 +100,7 @@ const Posts = (props) => {
 										<CardMedia
 											className={classes.cardMedia}
 											image={post.image}
-											title="Image title"
+											title={post.title}
 										/>
 									</Link>
 									<CardContent className={classes.cardContent}>
@@ -109,7 +120,7 @@ const Posts = (props) => {
 											<PopupState variant="popover" popupId="demo-popup-popover">
 											{(popupState) => (
 												<div>
-												<Button  rounded size="small"  color="#6197fb" {...bindTrigger(popupState)}>
+												<Button  rounded size="small" className={classes.fancy} {...bindTrigger(popupState)}>
 													<LinkRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Share											</Button>
 												<Popover
 													{...bindPopover(popupState)}
@@ -123,7 +134,7 @@ const Posts = (props) => {
 													}}
 												>	
 													<Box p={2}>
-														<Typography> 
+														<Typography > 
 															<AlternateEmailRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Code: {post.slug}
 														</Typography>
 													</Box> 
@@ -137,7 +148,7 @@ const Posts = (props) => {
 												href={'post/' + post.slug}
 												className={classes.link}>
 												
-												<Button rounded size="small"  color="#6197fb">
+												<Button rounded size="small" className={classes.fancy}>
 													<EventNoteRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Learn More
 												</Button>
 											</Link>

@@ -19,6 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Box from '@material-ui/core/Box';
 //import Button from '@material-ui/core/Button';
 
@@ -49,56 +50,20 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
+
 const Posts = (props) => {
 
-	var authorID = 1;
-
-    async function getToken() {
-        //console.log('***************************************************************');
-        const token = await localStorage.getItem('access_token');
-        //console.log('undecodedtoken: ',token); 
-        //console.log('Titiw');
-        const decoded = jwt_decode(token);
-        //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
-        const getID =  decoded["user_id"];
-        //console.log('***************************************************************');
-        let userID = JSON.stringify(getID);
-        //console.log('User ID from token', userID);
-        //console.log(typeof userID);
-        return userID;
-    }
-    
-    console.log('Initial User ID is : ', authorID);
-    const getID = async () => {
-        const data = await getToken();
-        //console.log(data);
-        return data;
-    }
-
-    //working
-    
-    getID().then(data => {
-        const dataID = parseInt(data);
-        authorID = dataID;
-        console.log('Final User ID is : ', authorID);
-        //console.log(typeof authorID);
-        return authorID;    
-    }).catch(error => {
-        console.log('User ID fetch failed: ', error);
-    });
-
+	var authorID = localStorage.getItem("userID"); //to be fixed!
 	const { posts } = props;
 	const classes = useStyles();
 	if (!posts || posts.length === 0) return <p>Can not find any posts, sorry</p>;
-	// authorID  == id
     return (
 		<React.Fragment>
+			<br/>
+
 			<Container maxWidth="md" component="main">
-				<Card rounded>
-					<CardContent>
-						
-						<Paper className={classes.root} style={{backgroundColor:'transparent', color: 'transparent', outline:'none', borderRadius: '30px'}}>						
+						<Paper className={classes.root} >						
 							<TableContainer className={classes.container} >
 								<Table stickyHeader aria-label="sticky table">
 									<TableHead>
@@ -108,13 +73,12 @@ const Posts = (props) => {
 											<TableCell align="left">Title</TableCell>
 											<TableCell align="left">Response</TableCell>
 											<TableCell align="left">Action</TableCell>
+											
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{posts.filter(function (post) {
-											console.log('Post author ID is : ', post.author);
-											return post.author == authorID;
-										}).map((post) => {
+									{posts.map((post) => {
+										if (post.author == authorID) {
 											return (
 												<TableRow>
 													<TableCell component="th" scope="row">
@@ -122,7 +86,7 @@ const Posts = (props) => {
 													</TableCell>
 
 													<TableCell align="left">
-														{post.category}
+														{post.eventoption} event
 													</TableCell>
 
 													<TableCell align="left">
@@ -145,43 +109,62 @@ const Posts = (props) => {
 															href={'/user/edit/' + post.id}
 															className={classes.link}
 														>
-															<EditIcon></EditIcon>
+															<EditIcon style={{'fontSize': '20px', 'color': '#387cfa'}}></EditIcon>
 														</Link>
 														<Link
 															color="textPrimary"
 															href={'/user/delete/' + post.id}
 															className={classes.link}
 														>
-															<DeleteForeverIcon></DeleteForeverIcon>
+															<DeleteForeverIcon style={{'fontSize': '20px', 'color': '#e60000'}}></DeleteForeverIcon>
+														</Link>
+														<Link
+															color="textPrimary"
+															href='#'
+															className={classes.link}
+															style={{ textDecoration: 'none' }}
+															underline="none"
+														>		
+																<NotificationsActiveIcon style={{'fontSize': '20px', 'color': '#387cfa', 'marginRight': '10px'}}> </NotificationsActiveIcon>
 														</Link>
 													</TableCell>
-
-													
+																		
 												</TableRow>
 											);
-										})}
+										}
+												
+										})
+									}
 										<TableRow>
 											<TableCell colSpan={5} align="right">
-												<Button
-													rounded
-													href={'/user/create'}
-													variant="contained"
-													color="primary"
+											<Link 
+												href={'/user/create'}
+												style={{ textDecoration: 'none' }}
+												underline="none"
 												>
-													Create New Story
-												</Button>
+												<Fab
+													bgColor="#6197fb" 
+													color="#ffffff"
+													variant="extended"
+													size="large"
+													aria-label="add"
+													style={{margin: '10px'}}
+													>
+													<EditIcon style={{'fontSize': '20px','verticalAlign':'middle', marginRight: '10px'}} />
+													Create New Story!
+												</Fab>		
+											</Link>											
 											</TableCell>
 										</TableRow>
 									</TableBody>
 								</Table>
 							</TableContainer>
-						</Paper>					
-					</CardContent>
-					
-				</Card>
-				
+						</Paper>								
 			</Container>
 		</React.Fragment>
+		
+		
 	);
 };
+
 export default Posts;

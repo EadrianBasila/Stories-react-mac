@@ -36,6 +36,22 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 		
 	},
+	fancy : {
+		"&:hover": {
+			backgroundColor: '#cddefe',
+			color: '#387cfa',
+		    fontWeight: 'bold'
+		},
+	},
+	fancy2 : {
+		"&:hover": {
+			backgroundColor: '#ffcccc',
+			color: '#e60000',
+		    fontWeight: 'bold'
+		},
+	}
+	
+
 }));
 
 function Header() {
@@ -197,17 +213,21 @@ function Header() {
 								}}
 								open={Boolean(anchorEl)}
 								onClose={handleClose}
+								
 							>	
 								<MenuItem 
 									onClick={handleClose} 
 									component={NavLink}
+									className={classes.fancy} 
 									to="/user">
-									My Profile
+									My Events
 								</MenuItem>
 
 								<MenuItem 
 									onClick={handleClose} 
 									component={NavLink}
+									className={classes.fancy} 
+
 									to="/register">
 									Register
 								</MenuItem>
@@ -215,6 +235,8 @@ function Header() {
 								<MenuItem 
 									onClick={handleClose}
 									component={NavLink}
+									className={classes.fancy} 
+									
 									to="/login">
 									Sign-in 
 								</MenuItem>
@@ -222,6 +244,8 @@ function Header() {
 								<MenuItem 
 									onClick={handleClose}
 									component={NavLink}
+									className={classes.fancy2} 
+
 									to="/logout">
 									Sign-out 
 								</MenuItem>

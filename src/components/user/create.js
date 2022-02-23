@@ -6,9 +6,14 @@ import jwt_decode from 'jwt-decode';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
+//UI Neumorphism
+import { Button } from 'ui-neumorphism';
+import { Card, CardHeader, Checkbox, Fab } from 'ui-neumorphism';
+import 'ui-neumorphism/dist/index.css';
+
 //MaterialUI
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -16,18 +21,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Fab from '@material-ui/core/Fab';
+//import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 //Maps
-import Card from '@material-ui/core/Card';
+//import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
-
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -54,6 +59,13 @@ const useStyles = makeStyles((theme) => ({
 	cardMedia: {
 		//paddingTop: '56.25%', // 16:9
 		height: '500px',
+	},
+	textField: {
+		marginRight: theme.spacing(1),
+		marginLeft: theme.spacing(1),
+		[`& fieldset`]: {
+		  borderRadius: 30,
+		},
 	},
 }));
 
@@ -132,44 +144,8 @@ export default function Create() {
 			.replace(/-+$/, ''); // Trim - from end of text
 	}
 
-    var authorID = 1;
 
-    async function getToken() {
-        //console.log('***************************************************************');
-        const token = await localStorage.getItem('access_token');
-        //console.log('undecodedtoken: ',token); 
-        //console.log('Titiw');
-        const decoded = jwt_decode(token);
-        //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
-        const getID =  decoded["user_id"];
-        //console.log('***************************************************************');
-        let userID = JSON.stringify(getID);
-        //console.log('User ID from token', userID);
-        //console.log(typeof userID);
-        return userID;
-    }
-    
-    console.log('Initial User ID is : ', authorID);
-    const getID = async () => {
-        const data = await getToken();
-        //console.log(data);
-        return data;
-    }
-
-    //working
-    
-    getID().then(data => {
-        const dataID = parseInt(data);
-        authorID = dataID;
-        console.log('Final User ID is : ', authorID);
-        //console.log(typeof authorID);
-        return authorID;    
-    }).catch(error => {
-        console.log('User ID fetch failed: ', error);
-    });
-
-
+	var authorID = localStorage.getItem("userID"); //to be fixed!
     //const userIDfromToken = getToken();
 	const history = useHistory();
     
@@ -239,200 +215,355 @@ export default function Create() {
 	return (
 		<>
 			{map &&
-			<Container component="main" maxWidth="md">
+			<Container component="main" maxWidth="md" >
 				<CssBaseline />
 				
 				<div className={classes.paper}>
-					
-					<Typography component="h1" variant="h4">
-						Let's create a new story!
-					</Typography>
 					<form className={classes.form} noValidate>
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<TextField								
-									variant="outlined"
-									required
-									fullWidth
-									id="title"
-									label="Post Title"
-									name="title"
-									autoComplete="title"
-									onChange={handleChange}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									variant="outlined"
-									required
-									fullWidth
-									id="excerpt"
-									label="Post Excerpt"
-									name="excerpt"
-									autoComplete="excerpt"
-									onChange={handleChange}
-									multiline
-									rows={4}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									variant="outlined"
-									
-									fullWidth
-									id="slug"
-									label="Post URL Slug"
-									name="slug"
-									autoComplete="slug"
-									value={postData.slug}
-									onChange={handleChange}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									variant="outlined"
-									required
-									fullWidth
-									id="content"
-									label="Description"
-									name="content"
-									autoComplete="content"
-									onChange={handleChange}
-									multiline
-									rows={4}
-								/>
-							</Grid>
-							<Grid item xs={12}>							
-								<TextField
-									variant="outlined"
-									
-									fullWidth
-									type="datetime-local"
-									id="eventdate"			
-									name="eventdate"
-									inputProps={{
-										min: new Date().toISOString().slice(0, 16),
-									  }}
-									autoComplete="eventdate"                  
-									onChange={handleChange}                                
-								/>
-							</Grid>
-							<Grid item xs={12}>							
-								<TextField
-									variant="outlined"
-									
-									fullWidth
-									id="evenaddress"
-									label="Event Address"			
-									name="eventaddress"
-									autoComplete="eventAddress"              
-									onChange={handleChange}                                
-								/>
-							</Grid>
-							<Grid item xs={12}>							
-								<TextField
-									variant="outlined"
-									
-									fullWidth
-									id="postattendee"
-									label="Event Attendees"
-									placeholder="Enter attendee email addresses (separated by commas)"			
-									name="postattendee"
-									autoComplete="postattendee" 
-									multiline
-									rows={4}             
-									onChange={handleChange}                                
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<InputLabel id="eventtypeLabel">Event Type</InputLabel>
-									<Select
-										variant="outlined"
-										
-										fullWidth
-										labelId="eventtypeLabel"
-										id="eventoption"
-										name='eventoption'
-										label="Event Type"
-										onChange={handleChange}
+						<Card rounded >
+							<CardActions></CardActions>
+							<CardHeader>
+								<Typography
+									component="h1"
+									variant="h3"
+									align="center"
+									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
 									>
-										<MenuItem value={'public'}>Public Event</MenuItem>
-										<MenuItem value={'private'}>Private Event</MenuItem>
-									</Select>
+									Let's create a new story!
+								</Typography>					
+							</CardHeader>	
+								<Grid container justify='center' spacing={2}>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"												
+												required												
+												id="email"
+												fullWidth
+												placeholder="Enter Event Title"
+												name="title"
+												autoComplete="title"
+												autoFocus
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>				
+										</Box>													
+										</Card>
+									</Box>									
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"												
+												required												
+												id="excerpt"
+												fullWidth
+												placeholder="Enter Short Event Description"
+												name="excerpt"
+												autoComplete="ecxcerpt"
+												multiline
+												rows={3}
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>				
+										</Box>													
+										</Card>
+									</Box>									
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"												
+												required												
+												id="slug"
+												fullWidth
+												placeholder="event-url"
+												name="slug"
+												autoComplete="slug"
+												value={postData.slug}
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>				
+										</Box>													
+										</Card>
+									</Box>								
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"												
+												required												
+												id="content"
+												fullWidth
+												placeholder="Enter Event Content"
+												name="contenr"
+												autoComplete="content"
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+												multiline
+												rows={5}
+											/>				
+										</Box>													
+										</Card>
+									</Box>												
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"	
+												type="datetime-local"																						
+												id="eventdate"
+												fullWidth
+												name="eventdate"
+												autoComplete="eventdate"
+												autoFocus
+												className={classes.textField}
+												onChange={handleChange}
+												inputProps={{min: new Date().toISOString().slice(0, 16) }}
+												InputProps={{ disableUnderline: true }}
+											/>				
+										</Box>													
+										</Card>
+									</Box>													
+							
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<TextField											
+												variant="standard"												
+												required												
+												id="eventaddress"
+												fullWidth
+												placeholder="Enter Event Address"
+												name="eventaddress"
+												autoComplete="eventaddress"
+												autoFocus
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+											/>				
+										</Box>													
+										</Card>
+									</Box>																								
+								</Grid>
+								<Grid item xs={12}>	
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>							
+											<TextField											
+												variant="standard"												
+												required												
+												id="postattendee"
+												fullWidth
+												placeholder="Enter attendee email addresses (separated by commas)"
+												name="postattendee"
+												autoComplete="postattendee"											
+												className={classes.textField}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+												multiline
+												rows={4} 
+											/>				
+										</Box>													
+										</Card>
+									</Box>							
+								</Grid>
+								<Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<InputLabel style={{fontSize:'13px'}}>Event Type</InputLabel>
+											<Select
+												variant="standard"						
+												fullWidth											
+												id="eventoption"
+												name='eventoption'											
+												onChange={handleChange}
+												disableUnderline
+												>
+												<MenuItem value={'public'}>Public Event</MenuItem>
+												<MenuItem value={'private'}>Private Event</MenuItem>
+											</Select>
+										</Box>													
+										</Card>
+									</Box>																							
+								</Grid>
+								{/* <Grid item xs={12}>
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>
+											<label htmlFor="post-image">
+												<IconButton color="primary" aria-label="upload picture" component="span">
+													<PhotoCamera />
+												</IconButton>
+											</label>
+											<input
+												accept="image/*"
+												className={classes.input}
+												id="post-image"
+												onChange={handleChange}
+												name="image"
+												type="file"
+											/>
+										</Box>													
+										</Card>
+									</Box>												
+								</Grid> */}
+
+								<Grid item xs={12}>
+									<Grid
+										container
+										direction="row"
+										justifyContent="center"
+										alignItems="space-around"
+										>
+										<Card inset rounded>
+											<CardHeader>
+												<Box mr={2} ml={2}>	
+													<Box p={2}>
+															image preview
+													</Box>
+												</Box>
+											</CardHeader>															
+										</Card>	
+										<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+										<Card inset rounded>
+											<CardHeader>
+											<Box mr={2} ml={2}>										
+											<Box p={2}>
+													<label htmlFor="post-image">
+															<IconButton color="primary" aria-label="upload picture" component="span">
+																<PhotoCamera />
+															</IconButton>
+														</label>
+														<input
+															accept="image/*"
+															className={classes.input}
+															id="post-image"
+															onChange={handleChange}
+															name="image"
+															type="file"
+														/>
+													</Box>													
+													
+												</Box>				
+											</CardHeader>															
+										</Card>	
+										<br/>
+										<br/>
+									</Grid>
+								</Grid>
+								
+								
 							</Grid>
-							<Grid item xs={12}>
-							<label htmlFor="post-image">
-								<IconButton color="primary" aria-label="upload picture" component="span">
-									<PhotoCamera />
-								</IconButton>
-							</label>
-							<input
-								accept="image/*"
-								className={classes.input}
-								id="post-image"
-								onChange={handleChange}
-								name="image"
-								type="file"
-							/>
-							</Grid>
-						</Grid>
+						</Card>
+						<br/>
+						<br/>
 						<div>
 							<Container  maxWidth="md"  id="map" >
-										<Card className={classes.card} style={{'borderRadius': '25px'}}>		
+										<Card className={classes.card} >
+									  	<CardActions></CardActions>
+											<CardHeader>
+												<Typography
+													component="h1"
+													variant="h5"
+													align="center"
+													style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+													>
+													Pick a place for your event!
+												</Typography>					
+											</CardHeader>	
 												<CardMedia
 													className={classes.cardMedia}
 													ref={mapElement}
 												/>
-											<CardContent>					
+											<CardContent>
 												<Grid
 													container
 													direction="row"
 													justifyContent="center"
 													alignItems="space-around"
 													>
-														<TextField
-															variant="outlined"
-															name="longitude"
-															label="Longitude"
-															id="longitude"
-															value={longitude}							
-															size="small"
-															placeholder="Enter Longitude"
-															onChange={handleChangeLn}
-														/>
-														<Divider orientation="vertical" variant="middle"flexItem />
-														<TextField
-															variant="outlined"
-
-															name="latitude"
-															label="Latitude"
-															id="latitude"
-															value={latitude}							
-															size="small"
-															placeholder="Enter Latitude"
-															onChange={handleChangeLt}
-														/>							
-												</Grid>
+														<Card inset rounded>
+															<CardHeader>
+																<TextField											
+																	variant="standard"
+																	id="longitude"
+																	placeholder="Enter Longitude"
+																	label="Longitude"
+																	name="longitude"
+																	size="small"
+																	value={longitude}
+																	onChange={handleChangeLn}	
+																	InputProps={{ disableUnderline: true }}
+																/>			
+															</CardHeader>															
+														</Card>		
+														<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+														<Card inset rounded>
+															<CardHeader>
+																<TextField											
+																	variant="standard"
+																	id="latitude"
+																	placeholder="Enter Latitude"
+																	label="Latitude"
+																	name="latitude"
+																	size="small"
+																	value={latitude}
+																	onChange={handleChangeLt}	
+																	InputProps={{ disableUnderline: true }}
+																/>			
+															</CardHeader>															
+														</Card>	
+														<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+														<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+														<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+														<Fab
+															type = "submit"
+															bgColor="#6197fb" 
+															color="#ffffff"
+															variant="extended"
+															size="large"
+															aria-label="add"
+															style={{margin: '10px'}}
+															onClick={handleSubmit}
+															>
+															<DirectionsWalkRounded className={classes.extendedIcon} />
+															Create Event!
+														</Fab>															
+												</Grid>																	
 											</CardContent>
-											<CardActions>
-												
-											</CardActions>
+											
 										</Card>
 								</Container> 
 						</div>
 						<Grid item xs={12}>
-							<Fab
-								type = "submit"
-								variant="extended"
-								item xs={12}
-								size="large"
-								color="primary"
-								aria-label="add"
-								onClick={handleSubmit}
-								>
-								<DirectionsWalkRounded className={classes.extendedIcon} />
-								Create Event
-							</Fab>
+							
 						</Grid>
 						
 					</form>

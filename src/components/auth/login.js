@@ -79,6 +79,7 @@ export default function SignIn() {
 				console.log('login info: ',res.data);
 				localStorage.setItem('access_token', res.data.access);
 				localStorage.setItem('refresh_token', res.data.refresh);
+				localStorage.setItem('userEmail', formData.email);
 				axiosInstance.defaults.headers['Authorization'] =
 					'JWT ' + localStorage.getItem('access_token');
 				history.push('/');

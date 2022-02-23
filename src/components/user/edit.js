@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),
@@ -40,47 +41,10 @@ export default function Create() {
         eventdate: '',
 	});
 
-    var authorID = 1;
-
-    async function getToken() {
-        //console.log('***************************************************************');
-        const token = await localStorage.getItem('access_token');
-        //console.log('undecodedtoken: ',token); 
-        //console.log('Titiw');
-        const decoded = jwt_decode(token);
-        //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
-        const getID =  decoded["user_id"];
-        //console.log('***************************************************************');
-        let userID = JSON.stringify(getID);
-        //console.log('User ID from token', userID);
-        //console.log(typeof userID);
-        return userID;
-    }
-    
-    
-
-    console.log('Initial User ID is : ', authorID);
-    const getID = async () => {
-        const data = await getToken();
-        //console.log(data);
-        return data;
-    }
-
-    //working
-    
-    getID().then(data => {
-        const dataID = parseInt(data);
-        authorID = dataID;
-        console.log('Final User ID is : ', authorID);
-        //console.log(typeof authorID);
-        return authorID;    
-    }).catch(error => {
-        console.log('User ID fetch failed: ', error);
-    });
-
-
 	const [formData, updateFormData] = useState(initialFormData);
+
+    var authorID = localStorage.getItem("userID"); //to be fixed!
+
 
 	useEffect(() => {
 		axiosInstance.get('user/edit/postdetail/' + id).then((res) => {

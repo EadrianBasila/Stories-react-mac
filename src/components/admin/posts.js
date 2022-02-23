@@ -1,7 +1,11 @@
 import React from 'react';
 import jwt_decode from 'jwt-decode';
 
+//UI Neumorphism
+import { Button, Fab } from 'ui-neumorphism'
+import 'ui-neumorphism/dist/index.css'
 //Material UI
+
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
@@ -14,7 +18,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -109,7 +113,7 @@ const Posts = (props) => {
 												{post.id}
 											</TableCell>
 											<TableCell align="left">{post.category}</TableCell>
-											<TableCell align="left">Author: {post.id}</TableCell>
+											<TableCell align="left">Author: {post.author}</TableCell>
 											<TableCell align="left">
 												<Link
 													color="textPrimary"
@@ -130,14 +134,14 @@ const Posts = (props) => {
 													href={'/admin/edit/' + post.id}
 													className={classes.link}
 												>
-													<EditIcon></EditIcon>
+													<EditIcon style={{'fontSize': '20px', 'color': '#387cfa'}}></EditIcon>
 												</Link>
 												<Link
 													color="textPrimary"
 													href={'/admin/delete/' + post.id}
 													className={classes.link}
 												>
-													<DeleteForeverIcon></DeleteForeverIcon>
+													<DeleteForeverIcon style={{'fontSize': '20px', 'color': '#e60000'}}></DeleteForeverIcon>
 												</Link>
 											</TableCell>
 										</TableRow>
@@ -145,13 +149,25 @@ const Posts = (props) => {
 								})}
 								<TableRow>
 									<TableCell colSpan={6} align="right">
-										<Button
+										<Link 
 											href={'/admin/create'}
-											variant="contained"
-											color="primary"
-										>
-											Create New Post
-										</Button>
+											style={{ textDecoration: 'none' }}
+											underline="none"
+											>
+										 	<Fab
+												bgColor="#6197fb" 
+												color="#ffffff"
+												variant="extended"
+												size="large"
+												aria-label="add"
+												style={{margin: '10px'}}
+												>
+												<EditIcon style={{'fontSize': '20px','verticalAlign':'middle', marginRight: '10px'}} />
+												Create New Story!
+											</Fab>		
+										</Link>
+											
+										
 									</TableCell>
 								</TableRow>
 							</TableBody>
