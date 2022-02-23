@@ -110,8 +110,10 @@ const Posts = (props) => {
 											<Typography 
 												color="textSecondary"
 												style={{wordWrap: "break-word"}}
+												multiline
+												rows={2}
 											>
-												{post.excerpt.substr(0, 30)}..
+												{post.excerpt.substr(0, 50)}..
 											</Typography>
 										</div>
 									</CardContent>
