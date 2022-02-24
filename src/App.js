@@ -153,7 +153,14 @@ function App() {
 		{map &&
 			<div className="App">
 				<br/>
-				<h1>Latest Stories</h1>
+				<Typography
+					component="h1"
+					variant="h3"
+					align="center"
+					style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+					>
+					Latest Stories
+				</Typography>		
 				<br/>
 				<PostLoading isLoading={appState.loading} posts={appState.posts} />
 				<br />
