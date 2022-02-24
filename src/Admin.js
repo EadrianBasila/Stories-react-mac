@@ -5,7 +5,7 @@ import PostLoadingComponent from './components/posts/postLoading';
 import axiosInstance from './axios';
 import jwt_decode from 'jwt-decode';
 import { useHistory } from 'react-router-dom';
-
+import Typography from '@material-ui/core/Typography';
 function Admin() {
 	const history = useHistory();
 	var authorID = 1;
@@ -68,7 +68,15 @@ function Admin() {
 
 	return (
 		<div className="App">
-			<h1>Latest Posts</h1>
+            <br/>
+			<Typography
+					component="h1"
+					variant="h3"
+					align="center"
+					style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+					>
+					All Stories
+			</Typography>		
 			<PostLoading isLoading={appState.loading} posts={appState.posts} />
 		</div>
 	);

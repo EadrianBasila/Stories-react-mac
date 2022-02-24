@@ -56,44 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
 
-	var authorID = 1;
-
-
-    async function getToken() {
-        //console.log('***************************************************************');
-        const token = await localStorage.getItem('access_token');
-        //console.log('undecodedtoken: ',token); 
-        //console.log('Titiw');
-        const decoded = jwt_decode(token);
-        //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
-        const getID =  decoded["user_id"];
-        //console.log('***************************************************************');
-        let userID = JSON.stringify(getID);
-        //console.log('User ID from token', userID);
-        //console.log(typeof userID);
-        return userID;
-    }
-    
-    console.log('Initial User ID is : ', authorID);
-    const getID = async () => {
-        const data = await getToken();
-        //console.log(data);
-        return data;
-    }
-
-    //working
-    
-    getID().then(data => {
-        const dataID = parseInt(data);
-        authorID = dataID;
-        console.log('Final User ID is : ', authorID);
-		return authorID;
-          
-    }).catch(error => {
-        console.log('User ID fetch failed: ', error);
-    });
-
+	var userID = parseInt(localStorage.getItem("userID"));
 
 	const classes = useStyles();
 	let history = useHistory();
@@ -180,10 +143,12 @@ function Header() {
 		
 						
 						<IconButton 
+							disabled = {userID ===1 ? true : false}
+							//
 							color="inherit"
 							component={NavLink}
 							to="/admin">
-							<AssignmentIndRoundedIcon style={{'fontSize': '30px', 'color': '#387cfa'}}/>
+							<AssignmentIndRoundedIcon style={{'fontSize': '30px', 'color': userID ===1 ? '#387cfa' : "#e2ebf5"}}/>
 						</IconButton>
 							
 						

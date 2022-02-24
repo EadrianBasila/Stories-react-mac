@@ -77,7 +77,7 @@ const Posts = (props) => {
 										className={classes.link}
 									>
 									<CardHeader	>
-										<Typography variant='h5' align = 'left' style={{ fontWeight:'bold'}}>
+										<Typography variant='h5' align = 'left' style={{ fontWeight:'bold', color:'#56595d'}}>
 												{post.title.substr(0, 16) + '..'}
 										</Typography>
 									</CardHeader>
@@ -91,7 +91,7 @@ const Posts = (props) => {
 											</Chip>
 											<Chip
 												size="small"
-												style={{'marginRight': '10px',  'backgroundColor':'#6197fb', 'color': '#ffffff' }}
+												style={{'marginRight': '10px',  'backgroundColor': post.eventresponse >= 1 ? '#ff9933' : '#387cfa', 'color': '#ffffff' }}
 												prepend={<PeopleRoundedIcon style={{'fontSize': '10px','verticalAlign':'middle' , 'marginRight': '5px'}}/> }
 												>
 												{post.eventresponse} 
