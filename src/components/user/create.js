@@ -374,8 +374,7 @@ export default function Create() {
 										<CardHeader none/>
 										<Box p={2}>							
 											<TextField											
-												variant="standard"												
-												required												
+												variant="standard"																								
 												id="postattendee"
 												fullWidth
 												placeholder="Enter attendee email addresses (separated by commas)"
@@ -446,7 +445,7 @@ export default function Create() {
 											<CardHeader>
 												<Box mr={2} ml={2}>	
 													<Box p={2}>
-															image preview
+															Upload Image
 													</Box>
 												</Box>
 											</CardHeader>															

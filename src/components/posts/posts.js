@@ -76,11 +76,11 @@ const Posts = (props) => {
 										href={'post/' + post.slug}
 										className={classes.link}
 									>
-									<CardHeader
-										title={post.title.substr(0, 20) + '...'}
-										
-										
-									/>
+									<CardHeader	>
+										<Typography variant='h5' align = 'left' style={{ fontWeight:'bold'}}>
+												{post.title.substr(0, 16) + '..'}
+										</Typography>
+									</CardHeader>
 										<div style={{display: 'flex',  justifyContent:'left', alignItems:'left', margin:'10px'}}>
 											<Chip
 												size="small"
