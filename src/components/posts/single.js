@@ -27,7 +27,7 @@ import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
-
+import Link from '@material-ui/core/Link';
 
 // Maps
 import CardContent from '@material-ui/core/CardContent';
@@ -91,11 +91,13 @@ export default function Post() {
 
 	//TomtomMaps
 	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
+	var currentID = localStorage.getItem("userID");
+	
 	const mapElement = useRef();
 	const[map, setMap] = useState({});
 	const [longitude, setLongitude] = useState(121.01071);
 	const [latitude, setLatitude] = useState(14.59795);
-
+	const [orgauthID, setOrgauthID] = useState(1);
 	const { slug } = useParams();
 	const classes = useStyles();
 
@@ -109,6 +111,7 @@ export default function Post() {
 			});
 			setLongitude(res.data.eventlon);
 			setLatitude(res.data.eventlat);
+			setOrgauthID(res.data.author);
 			console.log(res.data);
 		});
 
@@ -143,7 +146,8 @@ export default function Post() {
 	}, [setData,longitude, latitude]);
 	///////////////////////////////////////////
 
-
+	console.log('Current User ID: ' + currentID);
+	console.log('Original Author ID: ' + orgauthID);
 	
 
 	return (
@@ -315,7 +319,14 @@ export default function Post() {
 										</CardHeader>															
 									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />
-									<Fab
+									<Link
+										color="textPrimary"
+										href={'/user/edit/' + data.posts.id}
+										className={classes.link}
+										style={{ textDecoration: 'none' }}
+										underline="none"
+										>
+										<Fab
 										disabled={data.posts.eventoption ==='private' ? true : false}
 										bgColor="#6197fb" 
 										color="#ffffff"
@@ -327,6 +338,8 @@ export default function Post() {
 										<DirectionsWalkRounded className={classes.extendedIcon} />
 										Join Event
 									</Fab>				
+									</Link>
+									
 							</Grid>
 						</CardContent>
 						<CardActions>

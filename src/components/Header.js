@@ -146,9 +146,10 @@ function Header() {
 							className={classes.toolbarTitle}							
 						>
 							<Link
-								style={{ textDecoration: 'none' }}
+								
 								component={NavLink}
 								to="/"
+								style={{ textDecoration: 'none' }}
 								underline="none"
 								color="textPrimary"
 							>

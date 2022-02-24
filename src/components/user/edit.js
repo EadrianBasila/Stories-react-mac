@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 
 //UI Neumorphism
 import { Button } from 'ui-neumorphism';
-import { Card, CardHeader, Checkbox, Fab } from 'ui-neumorphism';
+import { Card, CardHeader, Checkbox, Fab, Tooltip } from 'ui-neumorphism';
 import 'ui-neumorphism/dist/index.css';
 
 //MaterialUI
@@ -30,6 +30,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
+import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
+import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,8 +53,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Create() {
 	const history = useHistory();
 	const { id } = useParams();
+	const [orgauthID, setOrgauthID] = useState(1);
 	const initialFormData = Object.freeze({
 		id: '',
+		author: '',
 		title: '',
 		slug: '',
 		excerpt: '',
@@ -69,14 +73,15 @@ export default function Create() {
 
 	const [formData, updateFormData] = useState(initialFormData);
 
-    var authorID = localStorage.getItem("userID"); //to be fixed!
-
+    var currentID = localStorage.getItem("userID"); //to be fixed!
+	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
 
 	useEffect(() => {
 		axiosInstance.get('user/edit/postdetail/' + id).then((res) => {
 			updateFormData({
 				...formData,
 				['id']: res.data.id,
+				['author']: res.data.author,
 				['title']: res.data.title,
 				['excerpt']: res.data.excerpt,
 				['slug']: res.data.slug,
@@ -90,6 +95,7 @@ export default function Create() {
 				['eventlon']: res.data.eventlon,
 				['eventlat']: res.data.eventlat,
 			});
+			setOrgauthID(res.data.author);
 			console.log(res.data);
 		});
 	}, [updateFormData]);
@@ -110,7 +116,7 @@ export default function Create() {
 			id: formData.id,
 			title: formData.title,
 			slug: formData.slug,
-			author: authorID,
+			author: formData.author,
 			excerpt: formData.excerpt,
 			content: formData.content,
 			status: formData.status,
@@ -128,8 +134,99 @@ export default function Create() {
 		window.location.reload();
 	};
 
-	const classes = useStyles();
+	console.log('Current User ID: ' + currentID);
+	console.log('Original Author ID: ' + orgauthID);
 
+	const classes = useStyles();
+	if (currentID !== orgauthID) { 
+		return(
+			<Container component="main" maxWidth="md">
+			<CssBaseline />
+			<div className={classes.paper}>
+
+				<form className={classes.form} noValidate>				
+					<Card rounded >
+							<CardActions></CardActions>
+							<CardHeader>
+								<Typography
+									component="h1"
+									variant="h3"
+									align="center"
+									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+									>
+									We're excited to have you!
+								</Typography>
+								<div style={{display: 'flex', justifyContent:'left', marginTop:'25px'}}>
+										
+										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
+											<PeopleRoundedIcon 
+											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventresponse}
+										</Button>	
+
+										<Button rounded  bgColor="#6197fb" color="#ffffff">
+											<LocationOnRoundedIcon 
+											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventaddress}
+										</Button>	
+				
+								</div>					
+							</CardHeader>	
+								<Grid container justify='center' spacing={2}>
+								
+								<Grid item xs={12}>	
+									<Box mr={2} ml={2}>
+										<Card inset rounded >
+										<CardHeader none/>
+										<Box p={2}>							
+											<TextField											
+												variant="standard"												
+												required												
+												id="postattendee"
+												fullWidth
+												placeholder="Enter attendee email addresses (separated by commas)"
+												name="postattendee"
+												autoComplete="postattendee"											
+												className={classes.textField}
+												value={formData.postattendee+","+userEmail}
+												onChange={handleChange}
+												InputProps={{ disableUnderline: true }}
+												multiline
+												rows={4} 
+											/>				
+										</Box>													
+										</Card>
+									</Box>							
+								</Grid>
+								<CardContent>
+									<Grid
+										container
+										direction="row"
+										justifyContent="center"
+										alignItems="space-around"
+										>											
+											<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+											<Fab
+												type = "submit"
+												bgColor="#6197fb" 
+												color="#ffffff"
+												variant="extended"
+												size="large"
+												aria-label="add"
+												style={{margin: '10px'}}
+												className={classes.submit}
+												onClick={handleSubmit}
+												>
+												<DirectionsWalkRounded className={classes.extendedIcon} />
+												Join Event!
+											</Fab>															
+										</Grid>										
+								</CardContent>								
+							</Grid>
+						</Card>
+				</form>
+			</div>
+		</Container>
+		);		
+	}
 	return (
 		<Container component="main" maxWidth="md">
 			<CssBaseline />
