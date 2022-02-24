@@ -32,6 +32,7 @@ import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
+import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -378,22 +379,24 @@ export default function Create() {
 									>
 									We're excited to have you!
 								</Typography>
-								<div style={{display: 'flex', justifyContent:'left', marginTop:'25px'}}>
-										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
-											<LocationOnRoundedIcon 
-											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.title}
+								<div style={{display: 'flex', justifyContent:'center', marginTop:'25px'}}>
+										<Typography
+											component="h1"
+											variant="h5"
+											align="center"
+											style={{  color: '#8fa0a5',}} //8fa0a5
+											>
+											You are joining {formData.title} event
+										</Typography>
+										<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+										<Button rounded  bgColor={formData.eventoption ==='private' ? '#ff6666' : '#2db300'}  color="#ffffff" style={{marginRight: '10px'}}>
+											<CalendarTodayRoundedIcon 
+											style={{'fontSize': '20px','verticalAlign':'middle', 'marginRight': '5px'}}/>{formData.eventoption}
 										</Button>	
-
 										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
 											<PeopleRoundedIcon 
-											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventresponse}
-										</Button>	
-
-										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
-											<LocationOnRoundedIcon 
-											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventaddress}
-										</Button>	
-				
+											style={{'fontSize': '20px','verticalAlign':'middle' , 'marginRight': '5px'}}/>{formData.eventresponse}
+										</Button>					
 								</div>					
 							</CardHeader>	
 								<Grid container justify='center' spacing={2}>
@@ -436,12 +439,13 @@ export default function Create() {
 												size="large"
 												aria-label="add"
 												style={{margin: '10px'}}
-												className={classes.submit}
 												onClick={handleSubmit}
 												>
 												<DirectionsWalkRounded className={classes.extendedIcon} />
 												Join Event!
-											</Fab>															
+											</Fab> 
+	
+																									
 										</Grid>										
 								</CardContent>								
 							</Grid>
