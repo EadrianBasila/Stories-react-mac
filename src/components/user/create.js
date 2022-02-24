@@ -189,7 +189,7 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-        
+        formData.eventresponse = parseInt(formData.eventresponse) + 1;
 		let formData = new FormData();
 		formData.append('title', postData.title);
 		formData.append('slug', postData.slug);

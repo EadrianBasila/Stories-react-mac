@@ -54,6 +54,7 @@ export default function Create() {
 	const history = useHistory();
 	const { id } = useParams();
 	const [orgauthID, setOrgauthID] = useState();
+	const [intResponse, setintResponse] = useState();
 	const initialFormData = Object.freeze({
 		id: '',
 		author: '',
@@ -96,9 +97,11 @@ export default function Create() {
 				['eventlat']: res.data.eventlat,
 			});
 			setOrgauthID(res.data.author);
+			setintResponse(res.data.eventresponse);
 			console.log(res.data);
 		});
 	}, [updateFormData]);
+
 
 	const handleChange = (e) => {
 		updateFormData({
@@ -111,28 +114,53 @@ export default function Create() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(formData);
-
-		axiosInstance.put(`user/edit/` + id + '/', {
-			id: formData.id,
-			title: formData.title,
-			slug: formData.slug,
-			author: formData.author,
-			excerpt: formData.excerpt,
-			content: formData.content,
-			status: formData.status,
-            eventdate: formData.eventdate,
-			eventresponse: formData.eventresponse,
-			eventoption: formData.eventoption,
-			postattendee: formData.postattendee,
-			eventaddress: formData.eventaddress,
-			eventlon: formData.eventlon,
-			eventlat: formData.eventlat,
-		});
-		history.push({
-			pathname: '/user/',
-		});
-		window.location.reload();
+		if (orgauthID === currentID){
+			axiosInstance.put(`user/edit/` + id + '/', {
+				id: formData.id,
+				title: formData.title,
+				slug: formData.slug,
+				author: formData.author,
+				excerpt: formData.excerpt,
+				content: formData.content,
+				status: formData.status,
+				eventdate: formData.eventdate,
+				eventresponse: formData.eventresponse,
+				eventoption: formData.eventoption,
+				postattendee: formData.postattendee,
+				eventaddress: formData.eventaddress,
+				eventlon: formData.eventlon,
+				eventlat: formData.eventlat,
+			});
+			history.push({
+				pathname: '/user/',
+			});
+		}
+		else{
+			formData.eventresponse = parseInt(formData.eventresponse) + 1;
+			formData.postattendee = formData.postattendee + ',' + userEmail;
+			axiosInstance.put(`user/edit/` + id + '/', {
+				id: formData.id,
+				title: formData.title,
+				slug: formData.slug,
+				author: formData.author,
+				excerpt: formData.excerpt,
+				content: formData.content,
+				status: formData.status,
+				eventdate: formData.eventdate,
+				eventresponse: formData.eventresponse,
+				eventoption: formData.eventoption,
+				postattendee: formData.postattendee,
+				eventaddress: formData.eventaddress,
+				eventlon: formData.eventlon,
+				eventlat: formData.eventlat,
+			});
+			history.push({
+				pathname: '/',
+			});
+			window.location.reload();
+			}		
 	};
+
 
 	console.log('Current User ID: ' + currentID);
 	console.log('Original Author ID: ' + orgauthID);
@@ -351,13 +379,17 @@ export default function Create() {
 									We're excited to have you!
 								</Typography>
 								<div style={{display: 'flex', justifyContent:'left', marginTop:'25px'}}>
-										
+										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
+											<LocationOnRoundedIcon 
+											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.title}
+										</Button>	
+
 										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
 											<PeopleRoundedIcon 
 											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventresponse}
 										</Button>	
 
-										<Button rounded  bgColor="#6197fb" color="#ffffff">
+										<Button rounded  bgColor="#6197fb" color="#ffffff" style={{marginRight: '10px'}}>
 											<LocationOnRoundedIcon 
 											style={{'fontSize': '20px','verticalAlign':'middle'}}/>{formData.eventaddress}
 										</Button>	
@@ -373,18 +405,16 @@ export default function Create() {
 										<Box p={2}>							
 											<TextField											
 												variant="standard"												
-												required												
+												disabled												
 												id="postattendee"
 												fullWidth
 												placeholder="Enter attendee email addresses (separated by commas)"
 												name="postattendee"
 												autoComplete="postattendee"											
 												className={classes.textField}
-												value={formData.postattendee+","+userEmail}
-												onChange={handleChange}
+												label="Your Email"
+												value={userEmail}
 												InputProps={{ disableUnderline: true }}
-												multiline
-												rows={4} 
 											/>				
 										</Box>													
 										</Card>
