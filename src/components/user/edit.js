@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Create() {
 	const history = useHistory();
 	const { id } = useParams();
-	const [orgauthID, setOrgauthID] = useState(1);
+	const [orgauthID, setOrgauthID] = useState();
 	const initialFormData = Object.freeze({
 		id: '',
 		author: '',
@@ -73,7 +73,7 @@ export default function Create() {
 
 	const [formData, updateFormData] = useState(initialFormData);
 
-    var currentID = localStorage.getItem("userID"); //to be fixed!
+    var currentID = parseInt(localStorage.getItem("userID")); //to be fixed!
 	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
 
 	useEffect(() => {
@@ -138,7 +138,201 @@ export default function Create() {
 	console.log('Original Author ID: ' + orgauthID);
 
 	const classes = useStyles();
-	if (currentID !== orgauthID) { 
+	if (orgauthID === currentID) {
+		return (		
+			<>
+				{orgauthID && <Container component="main" maxWidth="md">
+				<CssBaseline />
+				<div className={classes.paper}>
+	
+					<form className={classes.form} noValidate>				
+						<Card rounded >
+								<CardActions></CardActions>
+								<CardHeader>
+									<Typography
+										component="h1"
+										variant="h3"
+										align="center"
+										style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+										>
+										Let's edit your story!
+									</Typography>					
+								</CardHeader>	
+									<Grid container justify='center' spacing={2}>
+									<Grid item xs={12}>
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>
+												<TextField											
+													variant="standard"												
+																									
+													id="email"
+													fullWidth
+													placeholder="Enter Event Title"
+													name="title"
+													autoComplete="title"
+													autoFocus
+													value={formData.title}
+													onChange={handleChange}
+													InputProps={{ disableUnderline: true }}
+												/>				
+											</Box>													
+											</Card>
+										</Box>									
+									</Grid>
+									<Grid item xs={12}>
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>
+												<TextField											
+													variant="standard"												
+													required												
+													id="excerpt"
+													fullWidth
+													placeholder="Enter Short Event Description"
+													name="excerpt"
+													autoComplete="ecxcerpt"
+													multiline
+													rows={3}
+													className={classes.textField}
+													value={formData.excerpt} 
+													onChange={handleChange}
+													InputProps={{ disableUnderline: true }}
+												/>				
+											</Box>													
+											</Card>
+										</Box>									
+									</Grid>
+									<Grid item xs={12}>
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>
+												<TextField											
+													variant="standard"																																				
+													id="slug"
+													fullWidth
+													placeholder="event-url"
+													name="slug"
+													autoComplete="slug"
+													value={formData.slug} 
+													className={classes.textField}
+													onChange={handleChange}
+													InputProps={{ disableUnderline: true }}
+												/>				
+											</Box>													
+											</Card>
+										</Box>								
+									</Grid>
+									<Grid item xs={12}>
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>
+												<TextField											
+													variant="standard"												
+																									
+													id="content"
+													fullWidth
+													placeholder="Enter Event Content"
+													name="content"
+													autoComplete="content"
+													value={formData.content} 
+													className={classes.textField}
+													onChange={handleChange}
+													InputProps={{ disableUnderline: true }}
+													multiline
+													rows={5}
+												/>				
+											</Box>													
+											</Card>
+										</Box>												
+									</Grid>
+									<Grid item xs={12}>
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>
+												<TextField											
+													variant="standard"	
+													type="datetime-local"																						
+													id="eventdate"
+													fullWidth
+													name="eventdate"
+													autoComplete="eventdate"
+													value={formData.eventdate} 
+													className={classes.textField}
+													onChange={handleChange}
+													inputProps={{min: new Date().toISOString().slice(0, 16) }}
+													InputProps={{ disableUnderline: true }}
+												/>				
+											</Box>													
+											</Card>
+										</Box>													
+								
+									</Grid>									
+									<Grid item xs={12}>	
+										<Box mr={2} ml={2}>
+											<Card inset rounded >
+											<CardHeader none/>
+											<Box p={2}>							
+												<TextField											
+													variant="standard"												
+													required												
+													id="postattendee"
+													fullWidth
+													placeholder="Enter attendee email addresses (separated by commas)"
+													name="postattendee"
+													autoComplete="postattendee"											
+													className={classes.textField}
+													value={formData.postattendee}
+													onChange={handleChange}
+													InputProps={{ disableUnderline: true }}
+													multiline
+													rows={4} 
+												/>				
+											</Box>													
+											</Card>
+										</Box>							
+									</Grid>
+									<CardContent>
+										<Grid
+											container
+											direction="row"
+											justifyContent="center"
+											alignItems="space-around"
+											>
+												
+												<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
+												<Fab
+													type = "submit"
+													bgColor="#6197fb" 
+													color="#ffffff"
+													variant="extended"
+													size="large"
+													aria-label="add"
+													style={{margin: '10px'}}
+													className={classes.submit}
+													onClick={handleSubmit}
+													>
+													<DirectionsWalkRounded className={classes.extendedIcon} />
+													Update Event!
+												</Fab>															
+											</Grid>										
+									</CardContent>								
+								</Grid>
+							</Card>
+					</form>
+				</div>
+			</Container>
+		}			
+		</>
+		);
+	}
+	
+	if (orgauthID !== currentID) { 
 		return(
 			<Container component="main" maxWidth="md">
 			<CssBaseline />
@@ -227,215 +421,5 @@ export default function Create() {
 		</Container>
 		);		
 	}
-	return (
-		<Container component="main" maxWidth="md">
-			<CssBaseline />
-			<div className={classes.paper}>
-
-				<form className={classes.form} noValidate>				
-					<Card rounded >
-							<CardActions></CardActions>
-							<CardHeader>
-								<Typography
-									component="h1"
-									variant="h3"
-									align="center"
-									style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
-									>
-									Let's edit your story!
-								</Typography>					
-							</CardHeader>	
-								<Grid container justify='center' spacing={2}>
-								<Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"												
-																								
-												id="email"
-												fullWidth
-												placeholder="Enter Event Title"
-												name="title"
-												autoComplete="title"
-												autoFocus
-												value={formData.title}
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-											/>				
-										</Box>													
-										</Card>
-									</Box>									
-								</Grid>
-								<Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"												
-												required												
-												id="excerpt"
-												fullWidth
-												placeholder="Enter Short Event Description"
-												name="excerpt"
-												autoComplete="ecxcerpt"
-												multiline
-												rows={3}
-												className={classes.textField}
-												value={formData.excerpt} 
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-											/>				
-										</Box>													
-										</Card>
-									</Box>									
-								</Grid>
-								<Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"																																				
-												id="slug"
-												fullWidth
-												placeholder="event-url"
-												name="slug"
-												autoComplete="slug"
-												value={formData.slug} 
-												className={classes.textField}
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-											/>				
-										</Box>													
-										</Card>
-									</Box>								
-								</Grid>
-								<Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"												
-																								
-												id="content"
-												fullWidth
-												placeholder="Enter Event Content"
-												name="content"
-												autoComplete="content"
-												value={formData.content} 
-												className={classes.textField}
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-												multiline
-												rows={5}
-											/>				
-										</Box>													
-										</Card>
-									</Box>												
-								</Grid>
-								<Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"	
-												type="datetime-local"																						
-												id="eventdate"
-												fullWidth
-												name="eventdate"
-												autoComplete="eventdate"
-												value={formData.eventdate} 
-												className={classes.textField}
-												onChange={handleChange}
-												inputProps={{min: new Date().toISOString().slice(0, 16) }}
-												InputProps={{ disableUnderline: true }}
-											/>				
-										</Box>													
-										</Card>
-									</Box>													
-							
-								</Grid>
-								{/* <Grid item xs={12}>
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>
-											<TextField											
-												variant="standard"												
-												required												
-												id="eventaddress"
-												fullWidth
-												placeholder="Enter Event Address"
-												name="eventaddress"
-												autoComplete="eventaddress"
-												autoFocus
-												value={formData.eventaddress} 
-												className={classes.textField}
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-											/>				
-										</Box>													
-										</Card>
-									</Box>																								
-								</Grid> */}
-								<Grid item xs={12}>	
-									<Box mr={2} ml={2}>
-										<Card inset rounded >
-										<CardHeader none/>
-										<Box p={2}>							
-											<TextField											
-												variant="standard"												
-												required												
-												id="postattendee"
-												fullWidth
-												placeholder="Enter attendee email addresses (separated by commas)"
-												name="postattendee"
-												autoComplete="postattendee"											
-												className={classes.textField}
-												value={formData.postattendee}
-												onChange={handleChange}
-												InputProps={{ disableUnderline: true }}
-												multiline
-												rows={4} 
-											/>				
-										</Box>													
-										</Card>
-									</Box>							
-								</Grid>
-								<CardContent>
-									<Grid
-										container
-										direction="row"
-										justifyContent="center"
-										alignItems="space-around"
-										>
-											
-											<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
-											<Fab
-												type = "submit"
-												bgColor="#6197fb" 
-												color="#ffffff"
-												variant="extended"
-												size="large"
-												aria-label="add"
-												style={{margin: '10px'}}
-												className={classes.submit}
-												onClick={handleSubmit}
-												>
-												<DirectionsWalkRounded className={classes.extendedIcon} />
-												Update Event!
-											</Fab>															
-										</Grid>										
-								</CardContent>								
-							</Grid>
-						</Card>
-				</form>
-			</div>
-		</Container>
-	);
+	
 }

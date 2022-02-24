@@ -85,9 +85,13 @@ const useStyles = makeStyles((theme) => ({
 		    fontWeight: 'bold'
 		},
 	},
+
+	
+	
 }));
 
 export default function Post() {
+
 
 	//TomtomMaps
 	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
@@ -157,7 +161,7 @@ export default function Post() {
 			<div>
 				<Container  maxWidth="md"  id="map" >
 				<br/>
-				<Card rounded>
+				<Card className={classes.fancy2} rounded>
 						<CardHeader 						
 							title = {
 								<Typography
@@ -318,28 +322,36 @@ export default function Post() {
 											/>			
 										</CardHeader>															
 									</Card>		
-									<Divider orientation="vertical" variant="middle"flexItem />
-									<Link
-										color="textPrimary"
-										href={'/user/edit/' + data.posts.id}
-										className={classes.link}
-										style={{ textDecoration: 'none' }}
-										underline="none"
-										>
+									<Divider orientation="vertical" variant="middle"flexItem />									
 										<Fab
-										disabled={data.posts.eventoption ==='private' ? true : false}
-										bgColor="#6197fb" 
-										color="#ffffff"
-										variant="extended"
-										size="large"
-										aria-label="add"
-										style={{margin: '10px'}}
-										>
-										<DirectionsWalkRounded className={classes.extendedIcon} />
-										Join Event
-									</Fab>				
-									</Link>
-									
+											disabled={data.posts.eventoption ==='private' ? true : false}
+											bgColor="#6197fb" 
+											color="#ffffff"
+											variant="extended"
+											size="large"
+											aria-label="add"
+											style={{margin: '10px'}}
+											>
+											<Link	
+											color="textPrimary"
+											href={'/user/edit/' + data.posts.id}
+											className={classes.link}
+											style={{ textDecoration: 'none', alignItems: 'center', justifyContent: 'center' }}
+											underline="none">
+											<Grid 
+											container direction="row"
+											justifyContent="center">
+												<DirectionsWalkRounded className={classes.extendedIcon} style={{color: data.posts.eventoption ==='private' ? '#8fa0a5' : '#ffffff'}}>
+													
+												</DirectionsWalkRounded>
+												<Typography variant="subtitle1" style={{color: data.posts.eventoption ==='private' ? '#8fa0a5' : '#ffffff'}} >
+														Join Event
+												</Typography>		
+											</Grid>
+											
+											</Link>	
+																			
+										</Fab>												
 							</Grid>
 						</CardContent>
 						<CardActions>
