@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Posts from './components/admin/posts';
-import PostLoadingComponent from './components/posts/postLoading';
+import Posts from './components/admin/Posts';
+import PostLoadingComponent from './components/posts/PostLoading';
 import axiosInstance from './axios';
 import jwt_decode from 'jwt-decode';
 import { useHistory } from 'react-router-dom';

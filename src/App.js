@@ -10,8 +10,8 @@ import 'ui-neumorphism/dist/index.css'
 import './App.css';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
-import Posts from './components/posts/posts';
-import PostLoadingComponent from './components/posts/postLoading';
+import Posts from './components/posts/Posts';
+import PostLoadingComponent from './components/posts/PostLoading';
 import axiosInstance from './axios';
 import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
 

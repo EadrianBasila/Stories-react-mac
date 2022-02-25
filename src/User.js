@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Posts from './components/user/posts';
-import PostLoadingComponent from './components/posts/postLoading';
+import Posts from './components/user/Posts';
+import PostLoadingComponent from './components/posts/PostLoading';
 import axiosInstance from './axios';
 import Typography from '@material-ui/core/Typography';
 

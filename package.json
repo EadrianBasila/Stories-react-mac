@@ -1,6 +1,10 @@
 {
   "name": "storiesapi",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.13.1",
+    "npm": "8.1.2"
+  },
   "private": true,
   "dependencies": {
     "@date-io/moment": "^1.3.13",
