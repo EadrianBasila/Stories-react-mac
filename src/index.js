@@ -4,21 +4,21 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import App from './App';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Register from './components/Auth/Register';
-import Login from './components/Auth/Login';
-import Logout from './components/Auth/Logout';
-import Single from './components/Posts/Single';
-import Search from './components/Posts/Search';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import Register from './Components/Auth/Register';
+import Login from './Components/Auth/Login';
+import Logout from './Components/Auth/Logout';
+import Single from './Components/Posts/Single';
+import Search from './Components/Posts/Search';
 import Admin from './Admin';
-import Create from './components/Admin/Create';
-import Edit from './components/Admin/Edit';
-import Delete from './components/Admin/Delete';
+import Create from './Components/Admin/Create';
+import Edit from './Components/Admin/Edit';
+import Delete from './Components/Admin/Delete';
 import User from './User';
-import CreateUser from './components/User/Create';
-import EditUser from './components/User/Edit';
-import DeleteUser from './components/User/Delete';
+import CreateUser from './Components/User/Create';
+import EditUser from './Components/User/Edit';
+import DeleteUser from './Components/User/Delete';
 
 const routing = (
 	<Router>
