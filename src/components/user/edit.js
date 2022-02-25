@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory, useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 
 //UI Neumorphism
 import { Button } from 'ui-neumorphism';
@@ -20,17 +19,12 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 //import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 //Maps
 //import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
-import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 
@@ -52,10 +46,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Create() {
+	var currentID = parseInt(localStorage.getItem("userID")); //to be fixed!
+	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
 	const history = useHistory();
 	const { id } = useParams();
 	const [orgauthID, setOrgauthID] = useState();
 	const [intResponse, setintResponse] = useState();
+
+
 	const initialFormData = Object.freeze({
 		id: '',
 		author: '',
@@ -75,8 +73,7 @@ export default function Create() {
 
 	const [formData, updateFormData] = useState(initialFormData);
 
-    var currentID = parseInt(localStorage.getItem("userID")); //to be fixed!
-	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
+ 
 
 	useEffect(() => {
 		axiosInstance.get('user/edit/postdetail/' + id).then((res) => {
@@ -99,6 +96,7 @@ export default function Create() {
 			});
 			setOrgauthID(res.data.author);
 			setintResponse(res.data.eventresponse);
+			
 			console.log(res.data);
 		});
 	}, [updateFormData]);
@@ -162,6 +160,7 @@ export default function Create() {
 			}		
 	};
 
+	
 
 	console.log('Current User ID: ' + currentID);
 	console.log('Original Author ID: ' + orgauthID);
@@ -348,7 +347,8 @@ export default function Create() {
 													>
 													<DirectionsWalkRounded className={classes.extendedIcon} />
 													Update Event!
-												</Fab>															
+												</Fab>	
+																													
 											</Grid>										
 									</CardContent>								
 								</Grid>

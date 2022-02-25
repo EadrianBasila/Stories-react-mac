@@ -1,10 +1,12 @@
 import React from 'react';
 import jwt_decode from 'jwt-decode';
 
+
 //UI Neumorphism
 
-import { Card, CardHeader, Fab, TextArea, Tooltip, Button, CardContent } from 'ui-neumorphism'
+import { Card, Fab, Button} from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
+
 
 //Material-UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +22,7 @@ import TableRow from '@material-ui/core/TableRow';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import Box from '@material-ui/core/Box';
+
 //import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +50,19 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'left',
 		marginBottom: theme.spacing(2),
 	},
+	fancy : {
+		color:"#6197fb",
+		transition: theme.transitions.create(["background", "background-color"], {
+			duration: theme.transitions.duration.complex,
+		  }),
+		"&:hover": {
+			backgroundColor: '#6197fb',
+			color: '#ffffff',
+		    fontWeight: 'bold'
+		},
+	},
 }));
+
 
 
 
@@ -72,8 +86,7 @@ const Posts = (props) => {
 											<TableCell align="left">Category</TableCell>
 											<TableCell align="left">Title</TableCell>
 											<TableCell align="left">Response</TableCell>
-											<TableCell align="left">Action</TableCell>
-											
+											<TableCell align="left">Action</TableCell>											
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -118,16 +131,9 @@ const Posts = (props) => {
 														>
 															<DeleteForeverIcon style={{'fontSize': '20px', 'color': '#e60000'}}></DeleteForeverIcon>
 														</Link>
-														<Link
-															color="textPrimary"
-															href='#'
-															className={classes.link}
-															style={{ textDecoration: 'none' }}
-															underline="none"
-														>		
-																<NotificationsActiveIcon style={{'fontSize': '20px', 'color': '#387cfa', 'marginRight': '10px'}}> </NotificationsActiveIcon>
-														</Link>
 													</TableCell>
+													
+							
 																		
 												</TableRow>
 											);
@@ -136,7 +142,7 @@ const Posts = (props) => {
 										})
 									}
 										<TableRow>
-											<TableCell colSpan={5} align="right">
+											<TableCell colSpan={6} align="right">
 											<Link 
 												href={'/user/create'}
 												style={{ textDecoration: 'none' }}

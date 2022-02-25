@@ -1,13 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useParams } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
+import{ init } from '@emailjs/browser';
 
 //TomtomMaps
 import * as tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 //UI Neumorphism
-
 import { Card, CardHeader, Fab, TextArea, Tooltip, Button } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
@@ -19,6 +20,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
+import Alert from '@material-ui/lab/Alert';
+
 //import Fab from '@material-ui/core/Fab';
 import DirectionsWalkRounded from '@material-ui/icons/DirectionsWalkRounded';
 import TextField from '@material-ui/core/TextField';
@@ -33,10 +36,14 @@ import Link from '@material-ui/core/Link';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
-import Popover from '@material-ui/core/Popover';
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Divider from '@material-ui/core/Divider';
+
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -91,12 +98,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Post() {
-
+	init("user_Z5fS5WG4pNEPr9VesfUX8");
 
 	//TomtomMaps
 	var userEmail = localStorage.getItem("userEmail"); //to be fixed!
-	var currentID = localStorage.getItem("userID");
-	
+	var currentID = parseInt(localStorage.getItem("userID"));	
 	const mapElement = useRef();
 	const[map, setMap] = useState({});
 	const [longitude, setLongitude] = useState(121.01071);
@@ -104,7 +110,8 @@ export default function Post() {
 	const [orgauthID, setOrgauthID] = useState(1);
 	const { slug } = useParams();
 	const classes = useStyles();
-
+	const [attendee, setAttendee] = useState();
+	const [sslug, setSlug] = useState();
 	const [data, setData] = useState({ posts: [] });
 
 	useEffect(() => {
@@ -116,6 +123,8 @@ export default function Post() {
 			setLongitude(res.data.eventlon);
 			setLatitude(res.data.eventlat);
 			setOrgauthID(res.data.author);
+			setAttendee(res.data.postattendee);
+			setSlug(res.data.slug);		
 			console.log(res.data);
 		});
 
@@ -150,9 +159,36 @@ export default function Post() {
 	}, [setData,longitude, latitude]);
 	///////////////////////////////////////////
 
+	
 	console.log('Current User ID: ' + currentID);
 	console.log('Original Author ID: ' + orgauthID);
 	
+	const sendEmail = () =>{
+		var templateParams = {
+			postattendee: attendee,
+			message: sslug,
+		};
+		emailjs.send('service_qpcqosr','template_902f7rh', templateParams)
+		.then(function(response) {
+		console.log('SUCCESS!', response.status, response.text);
+		return (alert('Email notification successful!'))
+		}, function(err) {
+		console.log('FAILED...', err);
+		return (alert('Email notification failed!'));
+		});
+		
+		handleClose();
+	}
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};  
 
 	return (
 		
@@ -324,7 +360,7 @@ export default function Post() {
 									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />									
 										<Fab
-											disabled={data.posts.eventoption ==='private' ? true : false}
+											disabled={data.posts.author ==='private' ? true : false}
 											bgColor="#6197fb" 
 											color="#ffffff"
 											variant="extended"
@@ -351,7 +387,49 @@ export default function Post() {
 											
 											</Link>	
 																			
-										</Fab>												
+										</Fab>
+										<Fab
+											disabled={orgauthID === currentID ? false : true}
+											type = "submit"
+											bgColor="#6197fb" 
+											color="#ffffff"
+											variant="extended"
+											size="large"
+											aria-label="add"
+											style={{margin: '10px'}}
+											className={classes.submit}
+											onClick={handleClickOpen}
+											>
+											<NotificationsActiveIcon className={classes.extendedIcon} />
+											Notify Event Attendees!
+										</Fab>
+										<Dialog
+											open={open}
+											onClose={handleClose}
+											aria-labelledby="alert-dialog-title"
+											aria-describedby="alert-dialog-description"
+											BackdropProps={{ invisible: true }}
+											PaperProps={{
+												style: { borderRadius: 30, padding: 10,}
+												}}
+										>
+											<DialogTitle id="alert-dialog-title">
+											{"Notify event attendees"}
+											</DialogTitle>
+											<DialogContent>
+												<DialogContentText id="alert-dialog-description">
+													By clicking this, you will send email notification to all event attendees: <br/> 
+													{data.posts.postattendee}
+												</DialogContentText>
+											</DialogContent>
+											<DialogActions>
+												<Button rounded onClick={sendEmail} autoFocus className={classes.fancy}>
+													Send Email
+												</Button>
+												<Button rounded onClick={handleClose} className={classes.fancy}> Close </Button>		
+											</DialogActions>
+											<br/>
+										</Dialog>																
 							</Grid>
 						</CardContent>
 						<CardActions>
