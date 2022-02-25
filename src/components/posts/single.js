@@ -360,7 +360,7 @@ export default function Post() {
 									</Card>		
 									<Divider orientation="vertical" variant="middle"flexItem />									
 										<Fab
-											disabled={data.posts.author ==='private' ? true : false}
+											disabled={data.posts.eventoption ==='private' ? true : false}
 											bgColor="#6197fb" 
 											color="#ffffff"
 											variant="extended"
