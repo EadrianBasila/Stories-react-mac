@@ -17,7 +17,7 @@ function Admin() {
         //console.log('Titiw');
         const decoded = jwt_decode(token);
         //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
+        //console.log('Decoded data from token', decoded);
         const getID =  decoded["user_id"];
         //console.log('***************************************************************');
         let userID = JSON.stringify(getID);
@@ -38,7 +38,7 @@ function Admin() {
     getID().then(data => {
         const dataID = parseInt(data);
         authorID = dataID;
-        console.log('Final User ID is : ', authorID);
+        //console.log('Final User ID is : ', authorID);
         //console.log(typeof authorID);
         return authorID;    
     }).catch(error => {
@@ -56,7 +56,7 @@ function Admin() {
 			const allPosts = res.data;
 			if(authorID === 1) {
 				setAppState({ loading: false, posts: allPosts });
-				console.log(res.data);
+				//console.log(res.data);
 			}
 			else{
 				alert('You are not authorized to view this page');

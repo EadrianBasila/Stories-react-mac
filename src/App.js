@@ -57,7 +57,7 @@ function App() {
         //console.log('Titiw');
         const decoded = jwt_decode(token);
         //console.log('***************************************************************');
-        console.log('Decoded data from token', decoded);
+        //console.log('Decoded data from token', decoded);
         const getID =  decoded["user_id"];
         //console.log('***************************************************************');
         let userID = JSON.stringify(getID);
@@ -78,8 +78,8 @@ function App() {
     getID().then(data => {
         const dataID = parseInt(data);
         authorID = dataID;
-        console.log('Final User ID is : ', authorID);
-        console.log(typeof authorID);
+        //console.log('Final User ID is : ', authorID);
+        //console.log(typeof authorID);
 		localStorage.setItem("userID", authorID);
 		console.log("UserID loaded to local storage");
         return authorID;    
@@ -111,7 +111,7 @@ function App() {
 		axiosInstance.get().then((res) => {
 			const allPosts = res.data;
 			setAppState({ loading: false, posts: allPosts });
-			console.log(res.data);
+			//console.log(res.data);
 		});
 		let map = tt.map({
 			key: 'IFtSE2MH4pH9NWEVuAYOADCyGo9FNSOC',

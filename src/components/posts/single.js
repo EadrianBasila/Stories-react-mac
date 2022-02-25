@@ -125,7 +125,7 @@ export default function Post() {
 			setOrgauthID(res.data.author);
 			setAttendee(res.data.postattendee);
 			setSlug(res.data.slug);		
-			console.log(res.data);
+			//console.log(res.data);
 		});
 
 		let map = tt.map({
@@ -160,8 +160,8 @@ export default function Post() {
 	///////////////////////////////////////////
 
 	
-	console.log('Current User ID: ' + currentID);
-	console.log('Original Author ID: ' + orgauthID);
+	//console.log('Current User ID: ' + currentID);
+	//console.log('Original Author ID: ' + orgauthID);
 	
 	const sendEmail = () =>{
 		var templateParams = {

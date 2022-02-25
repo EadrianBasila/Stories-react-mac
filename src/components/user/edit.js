@@ -97,7 +97,7 @@ export default function Create() {
 			setOrgauthID(res.data.author);
 			setintResponse(res.data.eventresponse);
 			
-			console.log(res.data);
+			//console.log(res.data);
 		});
 	}, [updateFormData]);
 
@@ -112,7 +112,7 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
+		//console.log(formData);
 		if (orgauthID === currentID){
 			axiosInstance.put(`user/edit/` + id + '/', {
 				id: formData.id,
@@ -162,8 +162,8 @@ export default function Create() {
 
 	
 
-	console.log('Current User ID: ' + currentID);
-	console.log('Original Author ID: ' + orgauthID);
+	//console.log('Current User ID: ' + currentID);
+	//console.log('Original Author ID: ' + orgauthID);
 
 	const classes = useStyles();
 	if (orgauthID === currentID) {
