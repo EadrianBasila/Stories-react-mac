@@ -5,9 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import { NavLink } from 'react-router-dom';
 
-//Nuemorphism
-import { Divider } from 'ui-neumorphism'
+//Neumorphism
+import { Divider,} from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -16,17 +17,18 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: theme.spacing(3),
 		paddingBottom: theme.spacing(3),
 		[theme.breakpoints.up('sm')]: {
-			paddingTop: theme.spacing(6),
-			paddingBottom: theme.spacing(6),
+			paddingTop: theme.spacing(4),
+			paddingBottom: theme.spacing(4),
 		},
 	},
+
 }));
 
 function Copyright() {
 	return (
-		<Typography variant="body2" color="textSecondary" align="center">
+		<Typography variant="body2"  align="left">
 			{'All rights reserved © '}
-			<Link color="inherit" href="https://material-ui.com/">
+			<Link color="inherit" href="/">
 				PUP iBarkada
 			</Link>{' '}
 			{new Date().getFullYear()}
@@ -35,65 +37,98 @@ function Copyright() {
 	);
 }
 
-const footers = [
-	{
-		title: 'Company',
-		description: ['Team', 'History', 'Contact us', 'Locations'],
-	},
-	{
-		title: 'Features',
-		description: [
-			'Cool stuff',
-			'Random feature',
-			'Team feature',
-			'Developer stuff',
-			'Another one',
-		],
-	},
-	{
-		title: 'Resources',
-		description: [
-			'Resource',
-			'Resource name',
-			'Another resource',
-			'Final resource',
-		],
-	},
-	{
-		title: 'Legal',
-		description: ['Privacy policy', 'Terms of use'],
-	},
-];
 
 function Footer() {
 	const classes = useStyles();
 	return (
-		<React.Fragment>
-			<Container maxWidth="md" component="footer" className={classes.footer}>
-				{/* <Grid container spacing={4} justify="space-evenly">
-					{footers.map((footer) => (
-						<Grid item xs={6} sm={3} key={footer.title}>
-							<Typography variant="h6" color="textPrimary" gutterBottom>
-								{footer.title}
+	
+		<Container maxWidth="md" components="footer" className={classes.footer}>
+			<Divider />
+			<br/>
+			<Grid container spacing={2}>
+				<Grid item xs={5} md={5} sm container>
+					<Grid item xs container direction="column" spacing={2} justify="center"> 
+						<Grid item xs>
+							<Typography gutterBottom variant="subtitle1" component="div" style={{  color: '#387cfa', fontWeight: 'bold' }}>
+							PUP iBarkada            
 							</Typography>
-							<ul>
-								{footer.description.map((item) => (
-									<li key={item}>
-										<Link href="#" variant="subtitle1" color="textSecondary">
-											{item}
-										</Link>
-									</li>
-								))}
-							</ul>
+							<Typography variant="body2" gutterBottom>
+								Make hosting events fast and easy.
+							</Typography>
+							<Box>
+								<Copyright />
+							</Box>
+
 						</Grid>
-					))}
-				</Grid> */}
-				<Divider />
-				<Box mt={5}>
-					<Copyright />
-				</Box>
-			</Container>
-		</React.Fragment>
+					</Grid>
+				</Grid>
+				<Grid item xs={2} sm container>
+					<Grid item xs container direction="column" spacing={2} justify="center">
+						<Grid item xs>
+							<Typography gutterBottom variant="subtitle1" component="div" style={{  color: '#387cfa', fontWeight: 'bold' }}>
+							About              
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="#" component={NavLink} to="/">
+									Home
+								</Link>{' '}
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="#" component={NavLink} to="/login">
+									Sign In
+								</Link>{' '}
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="#" component={NavLink} to="/register">
+									Sign Up
+								</Link>{' '}
+							</Typography>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item xs={2} sm container>
+					<Grid item xs container direction="column" spacing={2} justify="center">
+						<Grid item xs>
+							<Typography gutterBottom variant="subtitle1" component="div" style={{  color: '#387cfa', fontWeight: 'bold' }}>
+								Contact Us
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="">
+									Email
+								</Link>{' '}
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="">
+									Phone
+								</Link>{' '}
+							</Typography>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item xs={3} sm container>
+					<Grid item xs container direction="column" spacing={2} justify="center"> 
+						<Grid item xs>
+							<Typography gutterBottom variant="subtitle1" component="div" style={{  color: '#387cfa', fontWeight: 'bold' }}>
+								Developers
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="https://github.com/EadrianBasila">
+									Eadrian M. Basila
+								</Link>{' '}
+							</Typography>
+							<Typography variant="body2">
+								<Link color="inherit" href="https://github.com/JohnAlbertFrancisco">
+									John Albert Francisco
+								</Link>{' '}
+							</Typography>
+							
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+			
+		</Container>
+	
 	);
 }
 

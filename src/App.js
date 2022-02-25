@@ -207,7 +207,7 @@ function App() {
 											/>			
 										</CardHeader>															
 									</Card>		
-									<Divider orientation="vertical" variant="middle"flexItem />
+									<Divider style={{background:'transparent'}} orientation="vertical" variant="middle" flexItem />
 									<Card inset rounded>
 										<CardHeader>
 											<TextField											
