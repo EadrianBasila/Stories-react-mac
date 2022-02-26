@@ -143,7 +143,7 @@ function Header() {
 		
 						
 						<IconButton 
-							disabled = {userID ===1 ? true : false}
+							disabled = {userID ===1 ? false : true}
 							//
 							color="inherit"
 							component={NavLink}
