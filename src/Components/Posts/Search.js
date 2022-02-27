@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axios';
 
-//UI Neumorphism
 import { Button } from 'ui-neumorphism'
-import { Card, CardHeader } from 'ui-neumorphism'
+import { Card, CardHeader, Chip } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 //MaterialUI
@@ -16,13 +15,14 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import EventNoteRoundedIcon from '@material-ui/icons/EventNoteRounded';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Box from '@material-ui/core/Box';
 import AlternateEmailRoundedIcon from '@material-ui/icons/AlternateEmailRounded';
+import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
@@ -43,6 +43,17 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: '9px',
 		textAlign: 'left',
 		marginBottom: theme.spacing(1),
+	},
+	fancy : {
+		color:"#6197fb",
+		transition: theme.transitions.create(["background", "background-color"], {
+			duration: theme.transitions.duration.complex,
+		  }),
+		"&:hover": {
+			backgroundColor: '#6197fb',
+			color: '#ffffff',
+		    fontWeight: 'bold'
+		},
 	},
 }));
 
@@ -65,34 +76,64 @@ const Search = () => {
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
-			<h1 align='center'>Search Stories</h1>
+			<Typography
+					component="h1"
+					variant="h3"
+					align="center"
+					style={{  color: '#387cfa', fontWeight: 'bold' }} //8fa0a5
+					>
+					Stories Results
+				</Typography>
+				<br />		
 				<Grid container spacing={5} alignItems="flex-end">
 					{appState.posts.map((post) => {
 						return (
 							// Enterprise card is full width at sm breakpoint
 							<Grid item key={post.id} xs={12} md={4}>
-								<Card rounded>
+								<Card rounded elevation={2}>
 									<Link
+										style={{ textDecoration: 'none' }}
 										color="textPrimary"
-										href={'/post/' + post.slug}
+										href={'post/' + post.slug}
 										className={classes.link}
 									>
-										<CardHeader
-										title={post.title.substr(0, 20)}
-																				
-										/>
+									<CardHeader	>
+										<Typography variant='h5' align = 'left' style={{ fontWeight:'bold', color:'#56595d'}}>
+												{post.title.substr(0, 16) + '..'}
+										</Typography>
+									</CardHeader>
+										<div style={{display: 'flex',  justifyContent:'left', alignItems:'left', margin:'10px'}}>
+											<Chip
+												size="small"
+												style={{'marginRight': '10px',  'backgroundColor': post.eventoption ==='private' ? '#ff6666' : '#2db300', 'color': '#ffffff' }}
+												prepend={<AccountBalanceIcon style={{'fontSize': '10px','verticalAlign':'middle', 'marginRight': '5px'}}/> }
+												>
+												{post.eventoption} event
+											</Chip>
+											<Chip
+												size="small"
+												style={{'marginRight': '10px',  'backgroundColor': post.eventresponse >= 1 ? '#ff9933' : '#387cfa', 'color': '#ffffff' }}
+												prepend={<PeopleRoundedIcon style={{'fontSize': '10px','verticalAlign':'middle' , 'marginRight': '5px'}}/> }
+												>
+												{post.eventresponse} 
+											</Chip>
+										</div>
 										<CardMedia
 											className={classes.cardMedia}
 											image={post.image}
-											title="Image title"
+											title={post.title}
 										/>
 									</Link>
-									
-								
 									<CardContent className={classes.cardContent}>
-						
+										
+										
 										<div className={classes.postText}>
-											<Typography color="textSecondary">
+											<Typography 
+												color="textSecondary"
+												style={{wordWrap: "break-word"}}
+												multiline
+												rows={2}
+											>
 												{post.excerpt.substr(0, 50)}..
 											</Typography>
 										</div>
@@ -102,7 +143,7 @@ const Search = () => {
 											<PopupState variant="popover" popupId="demo-popup-popover">
 											{(popupState) => (
 												<div>
-												<Button size="small" color="primary" {...bindTrigger(popupState)}>
+												<Button  rounded size="small" className={classes.fancy} {...bindTrigger(popupState)}>
 													<LinkRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Share											</Button>
 												<Popover
 													{...bindPopover(popupState)}
@@ -114,21 +155,23 @@ const Search = () => {
 													vertical: 'top',
 													horizontal: 'center',
 													}}
-												>
+												>	
 													<Box p={2}>
-													<Typography> 
-														<AlternateEmailRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Code: {post.slug}
-													</Typography>
-													</Box>
+														<Typography > 
+															<AlternateEmailRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/> Event Code: {post.slug}
+														</Typography>
+													</Box> 
 												</Popover>
 												</div>
 											)}
 											</PopupState>
 											<Link
+												style={{ textDecoration: 'none' }}
 												color="textPrimary"
-												href={'/post/' + post.slug}
+												href={'post/' + post.slug}
 												className={classes.link}>
-												<Button size="small" color="primary">
+												
+												<Button rounded size="small" className={classes.fancy}>
 													<EventNoteRoundedIcon style={{'fontSize': '20px','verticalAlign':'middle'}}/>  Learn More
 												</Button>
 											</Link>

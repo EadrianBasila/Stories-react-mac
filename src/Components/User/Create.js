@@ -159,6 +159,7 @@ export default function Create() {
 		postattendee: '',
 		eventoption: '',
 		eventaddress: '',
+		eventresponse: '',
 		eventlon: '',
 		eventlat: '',
 	});
@@ -189,7 +190,6 @@ export default function Create() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-        formData.eventresponse = parseInt(formData.eventresponse) + 1;
 		let formData = new FormData();
 		formData.append('title', postData.title);
 		formData.append('slug', postData.slug);
@@ -199,6 +199,7 @@ export default function Create() {
         formData.append('eventdate', postData.eventdate.toString());
 		formData.append('image', postimage.image[0]);
 		formData.append('postattendee', postData.postattendee);
+		formData.append('eventresponse', 1);
 		formData.append('eventoption', postData.eventoption);
 		formData.append('eventaddress', postData.eventaddress);
 		formData.append('eventlon', parseFloat(longitude));
